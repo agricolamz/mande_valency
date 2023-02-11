@@ -1,0 +1,470 @@
+---
+title: "Mande valency"
+format:
+  html:
+    embed-resources: true
+    output-file: index.html
+df-print: kable
+editor: source
+code-fold: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include=FALSE
+# setwd("/home/agricolamz/work/articles/2023_Mande_Say_Khachaturyan_Konoshenko/repo")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.width = 10, fig.height = 7)
+library(tidyverse)
+library(phangorn)
+theme_set(theme_bw()+theme(text = element_text(size = 16)))
+df_wide <- readxl::read_xlsx("../GM_merged_wide.xlsx")
+read_csv("../GM_merged.csv") %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) ->
+  df
+```
+
+
+::: {.panel-tabset}
+
+## Конструкции
+
+Я вынул из таблицы данные по дан, гуро, коно, кпелле, лоома, мано и сделал столбцы
+
+- `number`
+- `cunstruction`
+- `exteded_cunstruction`
+- `postposition`
+- `language`
+
+Есть случаи, когда конструкция (`cunstruction`) есть, а расшириной конструкции (`exteded_cunstruction`) нет:
+
+```{r}
+df <- read_csv("../GM_merged.csv")
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         is.na(extended_construction))
+```
+
+Видимо, все эти примеры надо поправить. Сколько у нас наблюдений по каждому языку?
+
+```{r}
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>% 
+  count(language)
+```
+
+
+А пока давайте посмотрим на общую таблицу:
+
+```{r}
+df_wide <- readxl::read_xlsx("../GM_merged_wide.xlsx")
+```
+
+Можно посчитать, сколько раз пары языков заполняют один и тот же стимул:
+
+```{r}
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>% 
+  arrange(language) %>% 
+  distinct(language, number) %>% 
+  widyr::pairwise_count(language, number) %>% 
+  rename(total = n) ->
+  df_pairwise_total
+
+df_pairwise_total %>% 
+  pivot_wider(names_from = item2, values_from = total) %>% 
+  arrange(item1)
+```
+
+Можно посчитать, сколько раз пары языков заполняют одну и ту же конструкцию (т. е. совпадают в конструкции, в одном и том же стимуле):
+
+```{r}
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>% 
+  group_by(number) %>% 
+  arrange(language) %>% 
+  widyr::pairwise_count(language, extended_construction) %>% 
+  group_by(item1, item2) %>% 
+  summarise(n = sum(n)) ->
+  df_pairwise_within_construction
+
+df_pairwise_within_construction %>%
+  pivot_wider(names_from = item2, values_from = n) %>% 
+  arrange(item1) %>% 
+  select(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano) 
+```
+
+Мне кажется, что чтобы посчитать процент совпадений, о котором просила Маша, нужно разделить последнюю таблицу на предпоследнюю:
+
+```{r}
+df_pairwise_total %>% 
+  left_join(df_pairwise_within_construction) %>% 
+  mutate(percantage = round(n/total*100, 3)) %>% 
+  select(item1, item2, percantage) %>% 
+  pivot_wider(names_from = item2, values_from = percantage) %>% 
+  arrange(item1) %>% 
+  select(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano)
+```
+
+Можно построить тепловую карту:
+
+```{r heatmap}
+df_pairwise_total %>% 
+  left_join(df_pairwise_within_construction) %>% 
+  mutate(percantage = round(n/total*100, 2),
+         item1 = case_match(item1, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item1),
+         item2 = case_match(item2, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item2)) %>% 
+  select(item1, item2, percantage) %>% 
+  ggplot(aes(item1, item2))+
+  geom_tile(aes(fill = percantage), colour = "white") +
+  geom_text(aes(label = str_c(percantage, "%")), colour = "white") +
+  scale_fill_gradient(low = "lightblue", high = "navy")+
+  coord_fixed()+
+  labs(x = "", y = "") +
+  theme(legend.position = "bottom")
+```
+
+Теперь можем провести быструю кластеризацию:
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r all-stimuli}
+df_wide %>% 
+  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)})) %>% 
+  select(Guro:Kpelle) %>% 
+  t() %>% 
+  dist(method = "binary")  ->
+  all_stimuli
+
+all_stimuli %>% 
+  hclust() %>% 
+  plot(main = "Все примеры, без фильтрации")
+```
+
+### neighbornet
+
+```{r all-stimuli-nn}
+all_stimuli %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Все примеры, без фильтрации")
+```
+
+:::
+
+Можно еще посмотреть на кластеризацию конструкций, но это не поместиться на экран. Однако я считаю, что это было бы интересно Сереже.
+
+Вот что будет, если взять только первые строки для каждого языка:
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r sample-first-construction}
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>%
+  group_by(number, language) %>% 
+  slice(1)  %>% 
+  ungroup() %>% 
+  mutate(extended_construction = 1) %>% 
+  pivot_wider(names_from = language, values_from = extended_construction, values_fill = 0) %>% 
+  select(Dan_Gweetaa:Mano)  %>% 
+  t() %>% 
+  dist(method = "binary")  ->
+  sample_first_construction
+
+sample_first_construction %>% 
+  hclust() %>% 
+  plot(main = "Выборка с первыми строками для каждого языка")
+```
+
+### neighbornet
+
+```{r sample-first-construction-nn}
+sample_first_construction %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Выборка с первыми строками для каждого языка")
+```
+
+:::
+
+> МХ: А что будет, если выбрать случайный эквивалент, а не первую строку?
+
+Вот что будет, если взять случайный эквивалент для каждого языка:
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r sample-random-construction}
+set.seed(42)
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>%
+  group_by(number, language) %>% 
+  sample_n(1) %>% 
+  ungroup() %>% 
+  mutate(extended_construction = 1) %>% 
+  pivot_wider(names_from = language, values_from = extended_construction, values_fill = 0) %>% 
+  select(Dan_Gweetaa:Mano)  %>% 
+  t() %>% 
+  dist(method = "binary")  ->
+  sample_random_construction
+
+sample_random_construction %>% 
+  hclust() %>% 
+  plot(main = "Выборка со случайным эквивалентом для каждого языка")
+```
+
+### neighbornet
+
+```{r sample-random-construction-nn}
+sample_random_construction %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Выборка со случайным эквивалентом для каждого языка")
+```
+
+:::
+
+Вот что будет, если взять только популярные конструкции:
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r sample-popular-construction}
+df_wide %>% 
+  group_by(number) %>% 
+  filter(n == max(n))  %>% 
+  ungroup() %>% 
+  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)})) %>% 
+  select(Guro:Kpelle) %>% 
+  t() %>% 
+  dist(method = "binary")  ->
+  sample_popular_construction
+
+sample_popular_construction %>% 
+  hclust() %>% 
+  plot(main = "Выборка с популярынми конструкциями")
+```
+
+### neighbornet
+
+```{r sample-popular-construction-nn}
+sample_popular_construction  %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Выборка с популярынми конструкциями")
+```
+
+:::
+
+> МХ: я также думаю что можно попробовать проанализировать только те стимулы где у ВСЕХ языков есть эквиваленты
+
+Вот список стимулов, для которых есть все шесть языков:
+
+```{r}
+df %>% 
+  count(number, language) %>% 
+  count(number) %>%
+  filter(n == 6) %>% 
+  pull(number) ->
+  to_keep
+to_keep
+```
+
+Или наоборот, вот номера, для которых не во всех языках есть данные:
+
+```{r}
+df %>% 
+  count(number, language) %>% 
+  count(number) %>% 
+  filter(n < 6) %>% 
+  pull(number)
+```
+
+Запустим кластеризацию:
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r stimuli-sample-all-langs}
+df_wide %>% 
+  filter(number %in% to_keep) %>% 
+  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)})) %>% 
+  select(Guro:Kpelle) %>% 
+  t() %>% 
+  dist(method = "binary") ->
+  stimuli_sample_all_langs
+
+stimuli_sample_all_langs %>% 
+  hclust() %>% 
+  plot(main = "Выборка стимулов со всеми 6 языками")
+```
+
+### neighbornet
+
+```{r stimuli-sample-all-langs-nn}
+stimuli_sample_all_langs  %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Выборка стимулов со всеми 6 языками")
+```
+
+:::
+
+## Послелоги
+
+Какие послелоги есть для каждого языка?
+
+```{r}
+df %>% 
+  count(language, adposition) %>% 
+  na.omit()
+```
+
+Проблемы:
+
+- в коно нет адлогов
+- в дан гвета есть адлоги dhi̋ɤ и dhiɤ̋, bhȁ и bhàa, которые, наверное, про одно и то же. Кроме того есть адлог loc.
+- в гуро есть адлоги léè и leè, lɛ̄ и lɛ, ɓa̰ и ɓā̰. Кроме того есть адлог loc.
+- в лома есть адлоги mà и mà̀ (с двумя знаками тона). Кроме того есть адлог loc.
+- в мано есть адлоги píé и píé (я не понимаю в чем разница...).
+
+## Preprocessing
+
+```{r}
+#| eval=FALSE
+mano_kpelle_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "mano + kpelle")
+
+mano_kpelle_pre %>% 
+  rename(number = Number,
+         construction = `Mano construction`,
+         extended_construction = `Mano extended construction type`,
+         adposition = `Mano Postposition`) %>% 
+  mutate(language = "Mano") %>% 
+  select(number, construction, extended_construction, adposition, language) %>% 
+  filter(!is.na(construction)) ->
+  mano
+
+mano_kpelle_pre %>% 
+  rename(number = Number,
+         construction = `Kpelle construction`,
+         extended_construction = `Kpelle extended construction type`,
+         adposition = `Kpelle postposition`) %>% 
+  mutate(language = "Kpelle") %>% 
+  select(number, construction, extended_construction, adposition, language) %>% 
+  filter(!is.na(construction)) ->
+  kpelle
+
+rm(mano_kpelle_pre)
+
+kono_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "kono")
+
+kono_pre %>% 
+  rename(number = Number,
+         construction = `Kono construction...8`,
+         extended_construction = `Kono extended construction`) %>% 
+  mutate(adposition = "",
+         language = "Kono") %>% 
+  select(number, construction, extended_construction, adposition, language) %>% 
+  filter(!is.na(construction)) ->
+  kono
+
+rm(kono_pre)
+
+# I renamed one of the columns to "Looma extended construction"
+looma_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "Looma")
+
+looma_pre %>% 
+  rename(number = Number,
+         construction = `Looma construction`,
+         extended_construction = `Looma extended construction`,
+         adposition = `Looma Postposition`) %>% 
+  mutate(language = "Looma") %>% 
+  select(number, construction, extended_construction, adposition, language) %>% 
+  filter(!is.na(construction)) ->
+  looma
+
+rm(looma_pre)
+
+# I renamed one of the columns to "Guro extended construction"
+guro_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "Guro")
+
+guro_pre %>% 
+  rename(number = Number,
+         construction = `Guro construction`,
+         extended_construction = `Guro extended construction`,
+         adposition = `Guro Postposition`) %>% 
+  mutate(language = "Guro") %>% 
+  select(number, construction, extended_construction, adposition, language) %>% 
+  filter(!is.na(construction)) ->
+  guro
+
+rm(guro_pre)
+
+dan_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "Dan Gweetaa from Vydrin")
+
+dan_pre %>% 
+  rename(number = Number,
+         construction = `Dan construction`,
+         extended_construction = `Dan extended construction type`,
+         adposition = `Dan Postposition`) %>% 
+  mutate(language = "Dan_Gweetaa") %>% 
+  select(number, construction, extended_construction, adposition, language) %>% 
+  filter(!is.na(construction)) ->
+  dan
+
+rm(dan_pre)
+
+guro %>% 
+  bind_rows(kono, kpelle, looma, mano, dan) %>%
+  write_csv("../GM_merged.csv", na = "")
+
+read_csv("../GM_merged.csv") %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>%
+  group_by(number) %>% 
+  add_count(extended_construction) %>% 
+  arrange(number, desc(n)) %>% 
+  select(-adposition) %>% 
+  group_by(number, extended_construction, language, n) %>% 
+  summarise(construction = str_c(construction, collapse = "; ")) %>% 
+  pivot_wider(names_from = language, values_from = construction, values_fill = "") %>% 
+  group_by(number) %>% 
+  mutate(id = 1:n()) %>%
+  ungroup() %>% 
+  select(number, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+  writexl::write_xlsx("../GM_merged_wide.xlsx")
+
+read_csv("../GM_merged.csv") %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>%
+  select(-construction) %>%
+  distinct(number, extended_construction, language, adposition) %>% 
+  group_by(number, extended_construction, language) %>% 
+  summarise(adposition = str_c(adposition, collapse = "; ")) %>% 
+  pivot_wider(names_from = language, values_from = adposition, values_fill = "") %>% 
+  group_by(number) %>% 
+  mutate(id = 1:n()) %>%
+  ungroup() %>% 
+  select(number, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+  writexl::write_xlsx("../GM_merged_wide_adpositions.xlsx")
+```
+
+:::
