@@ -436,6 +436,14 @@ guro %>%
   bind_rows(kono, kpelle, looma, mano, dan) %>%
   write_csv("../GM_merged.csv", na = "")
 
+
+readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") %>% 
+  select(Number, `English predicate`, `Stimulus sentence (SAY)`) %>% 
+  rename(number = Number,
+         predicate_eng = `English predicate`,
+         stimuli = `Stimulus sentence (SAY)`) ->
+  stimuli
+
 read_csv("../GM_merged.csv") %>% 
   filter(!str_detect(construction, "no equivalent"),
          !is.na(extended_construction)) %>%
@@ -449,7 +457,8 @@ read_csv("../GM_merged.csv") %>%
   group_by(number) %>% 
   mutate(id = 1:n()) %>%
   ungroup() %>% 
-  select(number, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+  left_join(stimuli) %>% 
+  select(number, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
   writexl::write_xlsx("../GM_merged_wide.xlsx")
 
 read_csv("../GM_merged.csv") %>% 
@@ -463,7 +472,8 @@ read_csv("../GM_merged.csv") %>%
   group_by(number) %>% 
   mutate(id = 1:n()) %>%
   ungroup() %>% 
-  select(number, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+  left_join(stimuli) %>% 
+  select(number, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
   writexl::write_xlsx("../GM_merged_wide_adpositions.xlsx")
 ```
 
