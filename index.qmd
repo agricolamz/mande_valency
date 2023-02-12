@@ -104,9 +104,9 @@ df_pairwise_within_construction %>%
 ```{r}
 df_pairwise_total %>% 
   left_join(df_pairwise_within_construction) %>% 
-  mutate(percantage = round(n/total*100, 3)) %>% 
-  select(item1, item2, percantage) %>% 
-  pivot_wider(names_from = item2, values_from = percantage) %>% 
+  mutate(percentage = round(n/total*100, 3)) %>% 
+  select(item1, item2, percentage) %>% 
+  pivot_wider(names_from = item2, values_from = percentage) %>% 
   arrange(item1) %>% 
   select(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano)
 ```
@@ -116,17 +116,17 @@ df_pairwise_total %>%
 ```{r heatmap}
 df_pairwise_total %>% 
   left_join(df_pairwise_within_construction) %>% 
-  mutate(percantage = round(n/total*100, 2),
+  mutate(percentage = round(n/total*100, 2),
          item1 = case_match(item1, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
                             .default = item1),
          item2 = case_match(item2, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
                             .default = item2)) %>% 
-  select(item1, item2, percantage) %>% 
+  select(item1, item2, percentage) %>% 
   ggplot(aes(item1, item2))+
-  geom_tile(aes(fill = percantage), colour = "white") +
-  geom_text(aes(label = str_c(percantage, "%")), colour = "white") +
+  geom_tile(aes(fill = percentage), colour = "white") +
+  geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
   scale_fill_gradient(low = "lightblue", high = "navy")+
   coord_fixed()+
   labs(x = "", y = "") +
