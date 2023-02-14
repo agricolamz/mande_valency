@@ -118,7 +118,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Конструкции</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Послелоги</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Preprocessing</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Конструкции</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Группировка по языкам</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Послелоги</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">Preprocessing</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>Я вынул из таблицы данные по дан, гуро, коно, кпелле, лоома, мано и сделал столбцы</p>
@@ -133,14 +133,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">is.na</span>(extended_construction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">is.na</span>(extended_construction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="kable-table">
-<table class="table table-sm table-striped">
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: right;">number</th>
@@ -151,27 +150,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: right;">52</td>
-<td style="text-align: left;">?</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">Kono</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">118</td>
-<td style="text-align: left;">?</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">Kono</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">120</td>
-<td style="text-align: left;">?</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">Kono</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -198,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
-<td style="text-align: right;">136</td>
+<td style="text-align: right;">135</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
@@ -206,19 +184,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kono</td>
-<td style="text-align: right;">116</td>
+<td style="text-align: right;">115</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kpelle</td>
-<td style="text-align: right;">141</td>
+<td style="text-align: right;">139</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Looma</td>
-<td style="text-align: right;">116</td>
+<td style="text-align: right;">117</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
-<td style="text-align: right;">217</td>
+<td style="text-align: right;">216</td>
 </tr>
 </tbody>
 </table>
@@ -267,54 +245,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: right;">NA</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">106</td>
 <td style="text-align: right;">97</td>
-<td style="text-align: right;">101</td>
-<td style="text-align: right;">107</td>
-<td style="text-align: right;">97</td>
-<td style="text-align: right;">110</td>
+<td style="text-align: right;">109</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
-<td style="text-align: right;">97</td>
+<td style="text-align: right;">96</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">101</td>
+<td style="text-align: right;">100</td>
 <td style="text-align: right;">98</td>
 <td style="text-align: right;">97</td>
 <td style="text-align: right;">103</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kono</td>
-<td style="text-align: right;">101</td>
-<td style="text-align: right;">101</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">108</td>
+<td style="text-align: right;">99</td>
 <td style="text-align: right;">100</td>
-<td style="text-align: right;">112</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">111</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kpelle</td>
-<td style="text-align: right;">107</td>
+<td style="text-align: right;">106</td>
 <td style="text-align: right;">98</td>
-<td style="text-align: right;">108</td>
+<td style="text-align: right;">107</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">102</td>
-<td style="text-align: right;">117</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">116</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: right;">97</td>
 <td style="text-align: right;">97</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">102</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">101</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">106</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
-<td style="text-align: right;">110</td>
+<td style="text-align: right;">109</td>
 <td style="text-align: right;">103</td>
-<td style="text-align: right;">112</td>
-<td style="text-align: right;">117</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">116</td>
 <td style="text-align: right;">106</td>
 <td style="text-align: right;">NA</td>
 </tr>
@@ -360,55 +338,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">43</td>
-<td style="text-align: right;">47</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">57</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">65</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
-<td style="text-align: right;">57</td>
+<td style="text-align: right;">62</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">53</td>
 <td style="text-align: right;">51</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">59</td>
 <td style="text-align: right;">65</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kono</td>
-<td style="text-align: right;">43</td>
-<td style="text-align: right;">50</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">51</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">80</td>
-<td style="text-align: right;">53</td>
-<td style="text-align: right;">74</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">77</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kpelle</td>
-<td style="text-align: right;">47</td>
-<td style="text-align: right;">53</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">58</td>
 <td style="text-align: right;">80</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">54</td>
-<td style="text-align: right;">93</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">101</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Looma</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">51</td>
-<td style="text-align: right;">53</td>
-<td style="text-align: right;">54</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">63</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">58</td>
+<td style="text-align: right;">68</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
-<td style="text-align: right;">57</td>
 <td style="text-align: right;">65</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">93</td>
-<td style="text-align: right;">58</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">68</td>
 <td style="text-align: right;">NA</td>
 </tr>
 </tbody>
@@ -446,55 +424,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">58.763</td>
-<td style="text-align: right;">42.574</td>
-<td style="text-align: right;">43.925</td>
-<td style="text-align: right;">47.423</td>
-<td style="text-align: right;">51.818</td>
+<td style="text-align: right;">64.583</td>
+<td style="text-align: right;">49.495</td>
+<td style="text-align: right;">51.887</td>
+<td style="text-align: right;">57.732</td>
+<td style="text-align: right;">59.633</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
-<td style="text-align: right;">58.763</td>
+<td style="text-align: right;">64.583</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">49.505</td>
-<td style="text-align: right;">54.082</td>
-<td style="text-align: right;">52.577</td>
+<td style="text-align: right;">51.000</td>
+<td style="text-align: right;">59.184</td>
+<td style="text-align: right;">60.825</td>
 <td style="text-align: right;">63.107</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kono</td>
-<td style="text-align: right;">42.574</td>
-<td style="text-align: right;">49.505</td>
+<td style="text-align: right;">49.495</td>
+<td style="text-align: right;">51.000</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">74.074</td>
-<td style="text-align: right;">53.000</td>
-<td style="text-align: right;">66.071</td>
+<td style="text-align: right;">74.766</td>
+<td style="text-align: right;">55.556</td>
+<td style="text-align: right;">69.369</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kpelle</td>
-<td style="text-align: right;">43.925</td>
-<td style="text-align: right;">54.082</td>
-<td style="text-align: right;">74.074</td>
+<td style="text-align: right;">51.887</td>
+<td style="text-align: right;">59.184</td>
+<td style="text-align: right;">74.766</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">52.941</td>
-<td style="text-align: right;">79.487</td>
+<td style="text-align: right;">62.376</td>
+<td style="text-align: right;">87.069</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Looma</td>
-<td style="text-align: right;">47.423</td>
-<td style="text-align: right;">52.577</td>
-<td style="text-align: right;">53.000</td>
-<td style="text-align: right;">52.941</td>
+<td style="text-align: right;">57.732</td>
+<td style="text-align: right;">60.825</td>
+<td style="text-align: right;">55.556</td>
+<td style="text-align: right;">62.376</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">54.717</td>
+<td style="text-align: right;">64.151</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
-<td style="text-align: right;">51.818</td>
+<td style="text-align: right;">59.633</td>
 <td style="text-align: right;">63.107</td>
-<td style="text-align: right;">66.071</td>
-<td style="text-align: right;">79.487</td>
-<td style="text-align: right;">54.717</td>
+<td style="text-align: right;">69.369</td>
+<td style="text-align: right;">87.069</td>
+<td style="text-align: right;">64.151</td>
 <td style="text-align: right;">NA</td>
 </tr>
 </tbody>
@@ -726,9 +704,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]   1   2   3   4   6   7   8  11  12  14  15  16  17  18  19  22  23  25  26
 [20]  27  28  29  31  32  33  34  35  36  38  39  40  41  43  44  46  49  50  51
-[39]  53  54  55  57  58  60  63  66  67  68  69  70  71  72  74  75  76  77  78
-[58]  79  80  81  83  85  89  90  91  93  94  95  96  98  99 100 101 102 105 106
-[77] 108 109 110 117 118 119 120 121</code></pre>
+[39]  53  55  57  58  60  63  66  67  68  69  70  71  72  74  75  76  77  78  79
+[58]  80  81  83  85  89  90  91  93  94  95  96  98  99 100 101 102 105 106 108
+[77] 109 110 117 119 121</code></pre>
 </div>
 </div>
 <p>Или наоборот, вот номера, для которых не во всех языках есть данные:</p>
@@ -742,9 +720,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]   5   9  10  13  20  21  24  30  37  42  45  47  48  52  56  59  61  62  64
-[20]  65  73  82  84  86  87  88  92  97 103 104 107 111 112 113 114 115 116 122
-[39] 123 124 125 126 127 128 129 130</code></pre>
+<pre><code> [1]   5   9  10  13  20  21  24  30  37  42  45  47  48  52  54  56  59  61  62
+[20]  64  65  73  82  84  86  87  88  92  97 103 104 107 111 112 113 114 115 116
+[39] 118 120 122 123 124 125 126 127 128 129 130</code></pre>
 </div>
 </div>
 <p>Запустим кластеризацию:</p>
@@ -790,13 +768,1884 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<p>Какие послелоги есть для каждого языка?</p>
+<p>Перед тем, как приступить к перекодированию, которое предложила Маша К., посмотрим статистику конструкций по языкам:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(language, adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(language, extended_construction) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">overall =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span>  </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(overall))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">extended_construction</th>
+<th style="text-align: right;">overall</th>
+<th style="text-align: right;">Dan_Gweetaa</th>
+<th style="text-align: right;">Guro</th>
+<th style="text-align: right;">Kono</th>
+<th style="text-align: right;">Kpelle</th>
+<th style="text-align: right;">Looma</th>
+<th style="text-align: right;">Mano</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y V</td>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux V Y Ad</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y N V</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux N V Y Ad</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N Aux V Y Ad</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux V loc</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Xpron N V Y Ad</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y be X Ad</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ygen N be X Ad</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen N be Y Ad</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ygen N Aux V X Ad</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux V X Ad</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be Y Ad</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux N V</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ygen N Aux X V</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux N V</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Y Aux X N V</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux V</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Xpron V Y Ad</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux 3sg V Y Ad</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen Y Aux V</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Z V Y Ad</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen Y Aux Xpron V</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ygen N be.neg X Ad</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux V X+Ypron Ad</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Xpron N V Y N Ad</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be Y</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Z Aux X V Y</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N Aux N V Y Ad</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux X N V Xpron Ad</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Xpron N N V Y Ad</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Y N N V</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Quot Y Ad</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y be N Ad</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be.neg Y Ad</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N be X Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y V Z Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Yposs N V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux.neg V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X be Y N Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N be N Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen Y Aux X V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen Y N Aux V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux V X N Ad N Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Y Aux X V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ygen N be X N Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Z Aux V X Y loc</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Z Aux X Y V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3SG Aux V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux N V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Yposs X Aux V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux N N V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux.Neg V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X N Aux.Neg V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux N N V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux V Z Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen N Aux V 3sg Ad Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N N be Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y N be.neg X Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux X+Ypron N V 3sg Refl Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux X+Ypron recp N V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux N V Y N Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Xrefl V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X N Aux V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X int N Aux V Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux N V Z Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux V Int Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux gà N Num</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xposs Y be.neg V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3sg N Vger Cop.neg Y Ad X Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Y V adj</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be adj Y Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux V X+Ypron recp Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux V adv X+Ypron recp Ad</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux X+Ypron N V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y N Aux V</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen N be</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Z Aux 3sg V X Ad Y</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Маша предложила классификацию, которую я попробую воспроизвести.</p>
+<blockquote class="blockquote">
+<ol type="1">
+<li>простая переходная вида X Aux Y V (только этот случай)</li>
+<li>простая непереходная X Aux V Y Ad, X Aux V loc, X+Y Aux V, Y Aux V X Ad (по идее исчерпывающий список, а что я забыла?)</li>
+<li>конструкция с копулой - можно взять автоматически все случаи, где в формуле есть копула be: Y be X Ad, X be Y Ad, X be adj Y Ad, N be Xgen Y Ad, X+Y be N Ad и т.д.</li>
+<li>некопульная конструкция со сложным глаголом - взять автоматически все случаи, где в формуле выполняется два условия: есть Aux (=нет be) и есть хотя бы одно N (вместе переходные, и непереходные) - X Aux N V Y Ad; X Aux Y N V; Xgen N Aux V Y Ad и т.д.</li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<p>По идее это не исчерпывающий список, останется что-то на периферии вроде X+Y Aux V X+Ypron recp Ad, но это редкие штуки.</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(language, extended_construction) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">case_when</span>(extended_construction <span class="sc">==</span> <span class="st">"X Aux Y V"</span> <span class="sc">~</span> <span class="st">"transitive"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"Aux"</span>) <span class="sc">&amp;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">!</span><span class="fu">str_detect</span>(extended_construction, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"intransitive"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"be"</span>) <span class="sc">~</span> <span class="st">"copula"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"Aux"</span>) <span class="sc">&amp;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">str_detect</span>(extended_construction, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"complex verb"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">overall =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span>  </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(overall))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">extended_construction</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: right;">overall</th>
+<th style="text-align: right;">Dan_Gweetaa</th>
+<th style="text-align: right;">Guro</th>
+<th style="text-align: right;">Kono</th>
+<th style="text-align: right;">Kpelle</th>
+<th style="text-align: right;">Looma</th>
+<th style="text-align: right;">Mano</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y V</td>
+<td style="text-align: left;">transitive</td>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux V Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux N V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N Aux V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux V loc</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Xpron N V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y be X Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ygen N be X Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen N be Y Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ygen N Aux V X Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux V X Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be Y Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ygen N Aux X V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Y Aux X N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux V</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Xpron V Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux 3sg V Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen Y Aux V</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Z V Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen Y Aux Xpron V</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ygen N be.neg X Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux V X+Ypron Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Xpron N V Y N Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be Y</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Z Aux X V Y</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N Aux N V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux X N V Xpron Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Xpron N N V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Y N N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Quot Y Ad</td>
+<td style="text-align: left;">other</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y be N Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be.neg Y Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N be X Y Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y V Z Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Yposs N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux.neg V Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X be Y N Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N be N Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen Y Aux X V</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen Y N Aux V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux V X N Ad N Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Y Aux X V</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ygen N be X N Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Z Aux V X Y loc</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Z Aux X Y V</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3SG Aux V Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y Aux N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Yposs X Aux V</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux N N V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux.Neg V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X N Aux.Neg V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux N N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux V Z Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen N Aux V 3sg Ad Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xgen N N be Y Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y N be.neg X Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux X+Ypron N V 3sg Refl Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux X+Ypron recp N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X Aux N V Y N Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Xrefl V Y Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X N Aux V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X int N Aux V Y Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux N V Z Ad</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux V Int Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux gà N Num</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xposs Y be.neg V</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3sg N Vger Cop.neg Y Ad X Ad</td>
+<td style="text-align: left;">other</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X Aux Y V adj</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X be adj Y Ad</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux V X+Ypron recp Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y Aux V adv X+Ypron recp Ad</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X+Y Aux X+Ypron N V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X+Y N Aux V</td>
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Xgen N be</td>
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Z Aux 3sg V X Ad Y</td>
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Вот, что получилось. Маш, что исправить? Вот саммари:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">case_when</span>(extended_construction <span class="sc">==</span> <span class="st">"X Aux Y V"</span> <span class="sc">~</span> <span class="st">"transitive"</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"Aux"</span>) <span class="sc">&amp;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">!</span><span class="fu">str_detect</span>(extended_construction, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"intransitive"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"be"</span>) <span class="sc">~</span> <span class="st">"copula"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"Aux"</span>) <span class="sc">&amp;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">str_detect</span>(extended_construction, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"complex verb"</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>)  <span class="sc">%&gt;%</span> </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>Looma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">type</th>
+<th style="text-align: right;">Dan_Gweetaa</th>
+<th style="text-align: right;">Guro</th>
+<th style="text-align: right;">Kono</th>
+<th style="text-align: right;">Kpelle</th>
+<th style="text-align: right;">Looma</th>
+<th style="text-align: right;">Mano</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">transitive</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">intransitive</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">complex verb</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">91</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">copula</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">other</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Во-вторых, есть отдельная просьба про распределение конструкций и глаголов. В первом листе stimuli_general в столбце B есть семантическая разметка глаголов. Добавь её, пожалуйста, в глагольную таблицу, которую ты будешь снова генерировать. А дальше я бы попросила сделать следующее. Посчитать для каждого глагола, сколько ему в наших языках соответствует разных конструкций из 4 типов, выделенных выше. А потом слить глаголы из одной семантической группы и посчитать для семантических групп вместе статистику по конструкциям. Грубо говоря я хочу проверить, верно ли, что у глаголов вида effect будет больше переходных конструкций, а у feeling больше сложных глаголов, т.к. более абстрактные значения языки склонны выражать метафорически.</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">case_when</span>(extended_construction <span class="sc">==</span> <span class="st">"X Aux Y V"</span> <span class="sc">~</span> <span class="st">"transitive"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"Aux"</span>) <span class="sc">&amp;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">!</span><span class="fu">str_detect</span>(extended_construction, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"intransitive"</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"be"</span>) <span class="sc">~</span> <span class="st">"copula"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">str_detect</span>(extended_construction, <span class="st">"Aux"</span>) <span class="sc">&amp;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">str_detect</span>(extended_construction, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"complex verb"</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type, language, semantic_type) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, type))<span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(semantic_type<span class="sc">~</span>language, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Ну вот примерно, то, что ты имела в виду, наверное, но это все нужно пересчитать, после того, как мы утвердим тип каждой из конструкции.</p>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<p>Какие послелоги есть для каждого языка?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(language, adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="kable-table">
@@ -817,7 +2666,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="even">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: left;">bhȁ</td>
-<td style="text-align: right;">23</td>
+<td style="text-align: right;">22</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
@@ -827,12 +2676,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="even">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: left;">dhɛ̏</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: left;">gɔ̏</td>
-<td style="text-align: right;">7</td>
+<td style="text-align: right;">5</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Dan_Gweetaa</td>
@@ -852,7 +2701,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: left;">loc</td>
-<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Dan_Gweetaa</td>
@@ -862,7 +2711,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Dan_Gweetaa</td>
 <td style="text-align: left;">tȁ</td>
-<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Dan_Gweetaa</td>
@@ -872,7 +2721,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">jì</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
@@ -882,72 +2731,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">leè</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Guro</td>
-<td style="text-align: left;">leè</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">loc</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">lɛ</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">ta</td>
-<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">và</td>
 <td style="text-align: right;">9</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">Guro</td>
-<td style="text-align: left;">yā̰</td>
-<td style="text-align: right;">8</td>
-</tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
-<td style="text-align: left;">ya̰</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;">yā̰</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Guro</td>
+<td style="text-align: left;">ya̰</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">zì</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Guro</td>
-<td style="text-align: left;">zūō</td>
+<td style="text-align: left;">zuo</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Guro</td>
 <td style="text-align: left;">ɓa̰</td>
 <td style="text-align: right;">25</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Kpelle</td>
 <td style="text-align: left;">à</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: right;">12</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Kpelle</td>
 <td style="text-align: left;">hù</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Kpelle</td>
 <td style="text-align: left;">lá</td>
 <td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle</td>
+<td style="text-align: left;">loc</td>
+<td style="text-align: right;">7</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kpelle</td>
@@ -966,143 +2815,133 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kpelle</td>
-<td style="text-align: left;">à</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Kpelle</td>
 <td style="text-align: left;">ɓà</td>
 <td style="text-align: right;">33</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Kpelle</td>
 <td style="text-align: left;">ɲá</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">bà</td>
 <td style="text-align: right;">7</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">bù</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">bɛ̀</td>
 <td style="text-align: right;">5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">gà</td>
 <td style="text-align: right;">10</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">kómá</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">Looma</td>
-<td style="text-align: left;">loc</td>
-<td style="text-align: right;">5</td>
-</tr>
 <tr class="odd">
 <td style="text-align: left;">Looma</td>
-<td style="text-align: left;">mà</td>
-<td style="text-align: right;">21</td>
+<td style="text-align: left;">loc</td>
+<td style="text-align: right;">6</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Looma</td>
+<td style="text-align: left;">mà</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">pòlù</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">sù</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">tá</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Looma</td>
 <td style="text-align: left;">yà</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">bà</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">gé</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">gɛ̀nɛ̀</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">ká</td>
 <td style="text-align: right;">22</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">ká, kɛ̀lɛ̀</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">kɛ̀lɛ̀</td>
 <td style="text-align: right;">5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">là</td>
-<td style="text-align: right;">8</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">lé</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">lɛ̀ɛ̄</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">lɛ̀ɛ̄, píé</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">mɔ̀</td>
-<td style="text-align: right;">46</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">píé</td>
 <td style="text-align: right;">7</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
-<td style="text-align: left;">píé</td>
+<td style="text-align: left;">lé</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Mano</td>
+<td style="text-align: left;">loc</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano</td>
+<td style="text-align: left;">lɛ̀ɛ̄</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano</td>
+<td style="text-align: left;">mɔ̀</td>
+<td style="text-align: right;">45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano</td>
+<td style="text-align: left;">píé</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano</td>
 <td style="text-align: left;">yí</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
@@ -1123,136 +2962,137 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>в мано есть адлоги píé и píé (я не понимаю в чем разница…).</li>
 </ul>
 </div>
-<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"mano + kpelle"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Mano construction</span><span class="st">`</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Mano extended construction type</span><span class="st">`</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Mano Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Mano"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  mano</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kpelle construction</span><span class="st">`</span>,</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kpelle extended construction type</span><span class="st">`</span>,</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kpelle postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kpelle"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  kpelle</span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mano_kpelle_pre)</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"kono"</span>)</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kono construction...8</span><span class="st">`</span>,</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kono extended construction</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adposition =</span> <span class="st">""</span>,</span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">language =</span> <span class="st">"Kono"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>  kono</span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(kono_pre)</span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Looma extended construction"</span></span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Looma"</span>)</span>
-<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Looma construction</span><span class="st">`</span>,</span>
-<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Looma extended construction</span><span class="st">`</span>,</span>
-<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Looma Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Looma"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>  looma</span>
-<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(looma_pre)</span>
-<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Guro extended construction"</span></span>
-<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Guro"</span>)</span>
-<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Guro construction</span><span class="st">`</span>,</span>
-<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Guro extended construction</span><span class="st">`</span>,</span>
-<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Guro Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Guro"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>  guro</span>
-<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(guro_pre)</span>
-<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Dan Gweetaa from Vydrin"</span>)</span>
-<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Dan construction</span><span class="st">`</span>,</span>
-<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Dan extended construction type</span><span class="st">`</span>,</span>
-<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Dan Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Dan_Gweetaa"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a>  dan</span>
-<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(dan_pre)</span>
-<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a>guro <span class="sc">%&gt;%</span> </span>
-<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(kono, kpelle, looma, mano, dan) <span class="sc">%&gt;%</span></span>
-<span id="cb23-86"><a href="#cb23-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">"../GM_merged.csv"</span>, <span class="at">na =</span> <span class="st">""</span>)</span>
-<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-88"><a href="#cb23-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-89"><a href="#cb23-89" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"stimuli_general"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Number, <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a>         <span class="at">predicate_eng =</span> <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>,</span>
-<span id="cb23-93"><a href="#cb23-93" aria-hidden="true" tabindex="-1"></a>         <span class="at">stimuli =</span> <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>) <span class="ot">-&gt;</span></span>
-<span id="cb23-94"><a href="#cb23-94" aria-hidden="true" tabindex="-1"></a>  stimuli</span>
-<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
-<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-101"><a href="#cb23-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(number, <span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-102"><a href="#cb23-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language, n) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-104"><a href="#cb23-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">construction =</span> <span class="fu">str_c</span>(construction, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-105"><a href="#cb23-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> construction, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-106"><a href="#cb23-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-107"><a href="#cb23-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb23-108"><a href="#cb23-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb23-109"><a href="#cb23-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-110"><a href="#cb23-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-111"><a href="#cb23-111" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide.xlsx"</span>)</span>
-<span id="cb23-112"><a href="#cb23-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-113"><a href="#cb23-113" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-114"><a href="#cb23-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
-<span id="cb23-115"><a href="#cb23-115" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-116"><a href="#cb23-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
-<span id="cb23-117"><a href="#cb23-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-118"><a href="#cb23-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-119"><a href="#cb23-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(adposition, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-120"><a href="#cb23-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> adposition, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-121"><a href="#cb23-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-122"><a href="#cb23-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb23-123"><a href="#cb23-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb23-124"><a href="#cb23-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-125"><a href="#cb23-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-126"><a href="#cb23-126" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_adpositions.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"mano + kpelle"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Mano construction</span><span class="st">`</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Mano extended construction type</span><span class="st">`</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Mano Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Mano"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  mano</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kpelle construction</span><span class="st">`</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kpelle extended construction type</span><span class="st">`</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kpelle postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kpelle"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  kpelle</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mano_kpelle_pre)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"kono"</span>)</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kono construction...8</span><span class="st">`</span>,</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kono extended construction</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adposition =</span> <span class="st">""</span>,</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">language =</span> <span class="st">"Kono"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>  kono</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(kono_pre)</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Looma extended construction"</span></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Looma"</span>)</span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Looma construction</span><span class="st">`</span>,</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Looma extended construction</span><span class="st">`</span>,</span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Looma Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Looma"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  looma</span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(looma_pre)</span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Guro extended construction"</span></span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Guro"</span>)</span>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Guro construction</span><span class="st">`</span>,</span>
+<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Guro extended construction</span><span class="st">`</span>,</span>
+<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Guro Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Guro"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>  guro</span>
+<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(guro_pre)</span>
+<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Dan Gweetaa from Vydrin"</span>)</span>
+<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Dan construction</span><span class="st">`</span>,</span>
+<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Dan extended construction type</span><span class="st">`</span>,</span>
+<span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Dan Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-77"><a href="#cb27-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Dan_Gweetaa"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-78"><a href="#cb27-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-79"><a href="#cb27-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb27-80"><a href="#cb27-80" aria-hidden="true" tabindex="-1"></a>  dan</span>
+<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(dan_pre)</span>
+<span id="cb27-83"><a href="#cb27-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-84"><a href="#cb27-84" aria-hidden="true" tabindex="-1"></a>guro <span class="sc">%&gt;%</span> </span>
+<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(kono, kpelle, looma, mano, dan) <span class="sc">%&gt;%</span></span>
+<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">"../GM_merged.csv"</span>, <span class="at">na =</span> <span class="st">""</span>)</span>
+<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-88"><a href="#cb27-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-89"><a href="#cb27-89" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"stimuli_general"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-90"><a href="#cb27-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Number, <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>, <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a>         <span class="at">predicate_eng =</span> <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>,</span>
+<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a>         <span class="at">stimuli =</span> <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>,</span>
+<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a>         <span class="at">semantic_type =</span> <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="ot">-&gt;</span></span>
+<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a>  stimuli</span>
+<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(number, <span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language, n) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">construction =</span> <span class="fu">str_c</span>(construction, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-106"><a href="#cb27-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> construction, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-107"><a href="#cb27-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-108"><a href="#cb27-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb27-109"><a href="#cb27-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb27-110"><a href="#cb27-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-111"><a href="#cb27-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-112"><a href="#cb27-112" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide.xlsx"</span>)</span>
+<span id="cb27-113"><a href="#cb27-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-114"><a href="#cb27-114" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-115"><a href="#cb27-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb27-116"><a href="#cb27-116" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-117"><a href="#cb27-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
+<span id="cb27-118"><a href="#cb27-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-119"><a href="#cb27-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-120"><a href="#cb27-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(adposition, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-121"><a href="#cb27-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> adposition, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-122"><a href="#cb27-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-123"><a href="#cb27-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb27-124"><a href="#cb27-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb27-125"><a href="#cb27-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-126"><a href="#cb27-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-127"><a href="#cb27-127" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_adpositions.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

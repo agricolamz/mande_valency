@@ -23,6 +23,13 @@ read_csv("../GM_merged.csv") %>%
   filter(!str_detect(construction, "no equivalent"),
          !is.na(extended_construction)) ->
   df
+readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") %>% 
+  select(Number, `English predicate`, `Stimulus sentence (SAY)`, `Semantic types`) %>% 
+  rename(number = Number,
+         predicate_eng = `English predicate`,
+         stimuli = `Stimulus sentence (SAY)`,
+         semantic_type = `Semantic types`) ->
+  stimuli
 ```
 
 
@@ -41,7 +48,6 @@ read_csv("../GM_merged.csv") %>%
 Есть случаи, когда конструкция (`cunstruction`) есть, а расшириной конструкции (`exteded_cunstruction`) нет:
 
 ```{r}
-df <- read_csv("../GM_merged.csv")
 df %>% 
   filter(!str_detect(construction, "no equivalent"),
          is.na(extended_construction))
@@ -328,6 +334,84 @@ title(main = "Выборка стимулов со всеми 6 языками")
 
 :::
 
+## Группировка по языкам
+
+Перед тем, как приступить к перекодированию, которое предложила Маша К., посмотрим статистику конструкций по языкам:
+
+```{r}
+df %>% 
+  count(language, extended_construction) %>%
+  group_by(extended_construction) %>% 
+  mutate(overall = sum(n)) %>%  
+  pivot_wider(names_from = language, values_from = n, values_fill = 0) %>% 
+  arrange(desc(overall))
+```
+
+Маша предложила классификацию, которую я попробую воспроизвести.
+
+>
+1) простая переходная вида X Aux Y V  (только этот случай)
+2) простая непереходная X Aux V Y Ad, X Aux V loc, X+Y Aux V, Y Aux V X Ad (по идее исчерпывающий список, а что я забыла?)
+3) конструкция с копулой - можно взять автоматически все случаи, где в формуле есть копула be: Y be X Ad, X be Y Ad, X be adj Y Ad, N be Xgen Y Ad, X+Y be N Ad и т.д.
+4) некопульная конструкция со сложным глаголом - взять автоматически все случаи, где в формуле выполняется два условия: есть Aux (=нет be) и есть хотя бы одно N (вместе переходные, и непереходные) - X Aux N V Y Ad; X Aux Y N V; Xgen N Aux V Y Ad и т.д.
+
+>По идее это не исчерпывающий список, останется что-то на периферии вроде X+Y Aux V X+Ypron recp Ad, но это редкие штуки. 
+
+```{r}
+df %>% 
+  count(language, extended_construction) %>%
+  mutate(type = case_when(extended_construction == "X Aux Y V" ~ "transitive",
+                          str_detect(extended_construction, "Aux") &
+                            !str_detect(extended_construction, "N") ~ "intransitive",
+                          str_detect(extended_construction, "be") ~ "copula",
+                          str_detect(extended_construction, "Aux") &
+                            str_detect(extended_construction, "N") ~ "complex verb",
+                          TRUE ~ "other")) %>% 
+  group_by(extended_construction) %>% 
+  mutate(overall = sum(n)) %>%  
+  pivot_wider(names_from = language, values_from = n, values_fill = 0) %>% 
+  arrange(desc(overall))
+```
+
+Вот, что получилось. Маш, что исправить? Вот саммари:
+
+```{r}
+df %>% 
+  mutate(type = case_when(extended_construction == "X Aux Y V" ~ "transitive",
+                          str_detect(extended_construction, "Aux") &
+                            !str_detect(extended_construction, "N") ~ "intransitive",
+                          str_detect(extended_construction, "be") ~ "copula",
+                          str_detect(extended_construction, "Aux") &
+                            str_detect(extended_construction, "N") ~ "complex verb",
+                          TRUE ~ "other")) %>% 
+  count(type, language) %>% 
+  pivot_wider(names_from = language, values_from = n, values_fill = 0)  %>% 
+  arrange(-Looma)
+```
+
+> Во-вторых, есть отдельная просьба про распределение конструкций и глаголов. В первом листе stimuli_general в столбце B есть семантическая разметка глаголов. Добавь её, пожалуйста, в глагольную таблицу, которую ты будешь снова генерировать. 
+А дальше я бы попросила сделать следующее. Посчитать для каждого глагола, сколько ему в наших языках соответствует разных конструкций из 4 типов, выделенных выше. А потом слить глаголы из одной семантической группы и посчитать для семантических групп вместе статистику по конструкциям. 
+Грубо говоря я хочу проверить, верно ли, что у глаголов вида effect будет больше переходных конструкций, а у feeling больше сложных глаголов, т.к. более абстрактные значения языки склонны выражать метафорически.
+
+```{r}
+df %>% 
+  left_join(stimuli) %>% 
+    mutate(type = case_when(extended_construction == "X Aux Y V" ~ "transitive",
+                          str_detect(extended_construction, "Aux") &
+                            !str_detect(extended_construction, "N") ~ "intransitive",
+                          str_detect(extended_construction, "be") ~ "copula",
+                          str_detect(extended_construction, "Aux") &
+                            str_detect(extended_construction, "N") ~ "complex verb",
+                          TRUE ~ "other")) %>% 
+  count(type, language, semantic_type) %>% 
+  ggplot(aes(n, type))+
+  geom_col()+
+  facet_grid(semantic_type~language, scales = "free")
+```
+
+Ну вот примерно, то, что ты имела в виду, наверное, но это все нужно пересчитать, после того, как мы утвердим тип каждой из конструкции.
+
+
 ## Послелоги
 
 Какие послелоги есть для каждого языка?
@@ -440,10 +524,11 @@ guro %>%
 
 
 readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") %>% 
-  select(Number, `English predicate`, `Stimulus sentence (SAY)`) %>% 
+  select(Number, `English predicate`, `Stimulus sentence (SAY)`, `Semantic types`) %>% 
   rename(number = Number,
          predicate_eng = `English predicate`,
-         stimuli = `Stimulus sentence (SAY)`) ->
+         stimuli = `Stimulus sentence (SAY)`,
+         semantic_type = `Semantic types`) ->
   stimuli
 
 read_csv("../GM_merged.csv") %>% 
@@ -460,7 +545,7 @@ read_csv("../GM_merged.csv") %>%
   mutate(id = 1:n()) %>%
   ungroup() %>% 
   left_join(stimuli) %>% 
-  select(number, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+  select(number, semantic_type, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
   writexl::write_xlsx("../GM_merged_wide.xlsx")
 
 read_csv("../GM_merged.csv") %>% 
@@ -475,7 +560,7 @@ read_csv("../GM_merged.csv") %>%
   mutate(id = 1:n()) %>%
   ungroup() %>% 
   left_join(stimuli) %>% 
-  select(number, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+  select(number, semantic_type, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
   writexl::write_xlsx("../GM_merged_wide_adpositions.xlsx")
 ```
 
