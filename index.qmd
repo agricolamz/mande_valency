@@ -19,10 +19,13 @@ library(tidyverse)
 library(widyr)
 library(phangorn)
 theme_set(theme_bw()+theme(text = element_text(size = 16)))
-df_wide <- readxl::read_xlsx("../GM_merged_wide.xlsx")
+readxl::read_xlsx("../GM_merged_wide.xlsx") %>% 
+  filter(!(number %in% c(112, 128, 122, 125, 114))) ->
+  df_wide
 read_csv("../GM_merged.csv") %>% 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(extended_construction)) ->
+         !is.na(extended_construction),
+         !(number %in% c(112, 128, 122, 125, 114))) ->
   df
 readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") %>% 
   select(Number, `English predicate`, `Stimulus sentence (SAY)`, `Semantic types`) %>% 
