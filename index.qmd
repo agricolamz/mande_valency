@@ -532,9 +532,9 @@ kono_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "kono")
 kono_pre %>% 
   rename(number = Number,
          construction = `Kono construction...8`,
-         extended_construction = `Kono extended construction`) %>% 
-  mutate(adposition = "",
-         language = "Kono") %>% 
+         extended_construction = `Kono extended construction`,
+         adposition = `Kono adposition`) %>% 
+  mutate(language = "Kono") %>% 
   select(number, construction, extended_construction, adposition, language) %>% 
   filter(!is.na(construction)) ->
   kono
