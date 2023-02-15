@@ -337,6 +337,53 @@ stimuli_sample_all_langs  %>%
 title(main = "Выборка стимулов со всеми 6 языками")
 ```
 
+### heatmap
+
+```{r stimuli-sample-all-langs-heatmap}
+df %>% 
+  filter(number %in% to_keep,
+         !str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>% 
+  arrange(language) %>% 
+  distinct(language, number) %>% 
+  pairwise_count(language, number) %>% 
+  rename(total = n) ->
+  df_pairwise_total
+
+df %>% 
+  filter(number %in% to_keep,
+         !str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>% 
+  group_by(number) %>% 
+  arrange(language) %>% 
+  pairwise_count(language, extended_construction) %>% 
+  mutate(n = 1) %>% # to unify
+  group_by(item1, item2) %>% 
+  summarise(n = sum(n)) ->
+  df_pairwise_within_construction
+
+df_pairwise_total %>% 
+  left_join(df_pairwise_within_construction) %>% 
+  mutate(percentage = round(n/total*100, 2),
+         item1 = case_match(item1, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item1),
+         item2 = case_match(item2, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item2)) %>% 
+  select(item1, item2, percentage) %>% 
+  ggplot(aes(item1, item2))+
+  geom_tile(aes(fill = percentage), colour = "white") +
+  geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
+  scale_fill_gradient(low = "lightblue", high = "navy")+
+  coord_fixed()+
+  labs(x = "", y = "", title = "Выборка стимулов со всеми 6 языками") +
+  theme(legend.position = "bottom")
+```
+
+:::
+
+
 :::
 
 > Интересно, что выборка со случайным эквивалентом и выборка только тех стимулов, где есть данные по всем шести языкам, дает такие разные результаты. Что будет если взять выборку данных по всем языкам и В НЕЙ провести случайную выборку эквивалентной конструкции?
@@ -376,6 +423,7 @@ title(main = "Выборка стимулов со всеми 6 языками  
 ```
 
 :::
+
 
 ## Группировка по языкам
 
