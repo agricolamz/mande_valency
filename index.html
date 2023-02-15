@@ -311,14 +311,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(language) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_count</span>(language, extended_construction) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item1, item2) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(n)) <span class="ot">-&gt;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  df_pairwise_within_construction</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df_pairwise_within_construction <span class="sc">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> item2, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(item1) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="co"># to unify</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item1, item2) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(n)) <span class="ot">-&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  df_pairwise_within_construction</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>df_pairwise_within_construction <span class="sc">%&gt;%</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> item2, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(item1) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="kable-table">
@@ -340,9 +341,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">63</td>
 <td style="text-align: right;">51</td>
-<td style="text-align: right;">56</td>
+<td style="text-align: right;">55</td>
 <td style="text-align: right;">57</td>
-<td style="text-align: right;">66</td>
+<td style="text-align: right;">65</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
@@ -364,12 +365,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kpelle</td>
-<td style="text-align: right;">56</td>
+<td style="text-align: right;">55</td>
 <td style="text-align: right;">58</td>
 <td style="text-align: right;">84</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">62</td>
-<td style="text-align: right;">101</td>
+<td style="text-align: right;">95</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Looma</td>
@@ -382,10 +383,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
-<td style="text-align: right;">66</td>
+<td style="text-align: right;">65</td>
 <td style="text-align: right;">65</td>
 <td style="text-align: right;">83</td>
-<td style="text-align: right;">101</td>
+<td style="text-align: right;">95</td>
 <td style="text-align: right;">67</td>
 <td style="text-align: right;">NA</td>
 </tr>
@@ -426,9 +427,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">65.625</td>
 <td style="text-align: right;">51.515</td>
-<td style="text-align: right;">52.830</td>
+<td style="text-align: right;">51.887</td>
 <td style="text-align: right;">59.375</td>
-<td style="text-align: right;">60.550</td>
+<td style="text-align: right;">59.633</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Guro</td>
@@ -450,12 +451,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kpelle</td>
-<td style="text-align: right;">52.830</td>
+<td style="text-align: right;">51.887</td>
 <td style="text-align: right;">59.184</td>
 <td style="text-align: right;">78.505</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">62.000</td>
-<td style="text-align: right;">87.069</td>
+<td style="text-align: right;">81.897</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Looma</td>
@@ -468,10 +469,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mano</td>
-<td style="text-align: right;">60.550</td>
+<td style="text-align: right;">59.633</td>
 <td style="text-align: right;">63.107</td>
 <td style="text-align: right;">74.775</td>
-<td style="text-align: right;">87.069</td>
+<td style="text-align: right;">81.897</td>
 <td style="text-align: right;">63.810</td>
 <td style="text-align: right;">NA</td>
 </tr>
@@ -2896,7 +2897,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(adposition)) <span class="sc">%&gt;%</span>  </span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(language, <span class="st">"__"</span>, adposition)) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  widyr<span class="sc">::</span><span class="fu">pairwise_count</span>(adposition, extended_construction)  <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_count</span>(adposition, extended_construction)  <span class="sc">%&gt;%</span></span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item1, item2) <span class="sc">%&gt;%</span> </span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> </span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

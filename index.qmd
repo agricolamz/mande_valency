@@ -96,6 +96,7 @@ df %>%
   group_by(number) %>% 
   arrange(language) %>% 
   pairwise_count(language, extended_construction) %>% 
+  mutate(n = 1) %>% # to unify
   group_by(item1, item2) %>% 
   summarise(n = sum(n)) ->
   df_pairwise_within_construction
@@ -485,7 +486,7 @@ df %>%
          !is.na(adposition)) %>%  
   group_by(number) %>% 
   mutate(adposition = str_c(language, "__", adposition)) %>% 
-  widyr::pairwise_count(adposition, extended_construction)  %>% 
+  pairwise_count(adposition, extended_construction)  %>%
   group_by(item1, item2) %>% 
   summarise(n = sum(n)) %>% 
   arrange(desc(n))
