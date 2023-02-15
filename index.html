@@ -118,7 +118,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Конструкции</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Группировка по языкам</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Послелоги</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">Preprocessing</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Конструкции</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Группировка по языкам</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Адлоги</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">Preprocessing</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>Я вынул из таблицы данные по дан, гуро, коно, кпелле, лоома, мано и сделал столбцы</p>
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(language) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(language, number) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  widyr<span class="sc">::</span><span class="fu">pairwise_count</span>(language, number) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_count</span>(language, number) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">total =</span> n) <span class="ot">-&gt;</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  df_pairwise_total</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -310,7 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(language) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  widyr<span class="sc">::</span><span class="fu">pairwise_count</span>(language, extended_construction) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_count</span>(language, extended_construction) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item1, item2) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(n)) <span class="ot">-&gt;</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  df_pairwise_within_construction</span>
@@ -2639,13 +2639,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Ну вот примерно, то, что ты имела в виду, наверное, но это все нужно пересчитать, после того, как мы утвердим тип каждой из конструкции.</p>
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
-<p>Какие послелоги есть для каждого языка?</p>
+<p>Какие адлоги есть для каждого языка?</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(language, adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adposition =</span> <span class="fu">str_split</span>(adposition, <span class="st">", "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(language, adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="kable-table">
@@ -2896,54 +2898,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">ká</td>
-<td style="text-align: right;">22</td>
+<td style="text-align: right;">23</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">ká, kɛ̀lɛ̀</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">kɛ̀lɛ̀</td>
-<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">là</td>
 <td style="text-align: right;">7</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">lé</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">loc</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">lɛ̀ɛ̄</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">mɔ̀</td>
 <td style="text-align: right;">45</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">píé</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">yí</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Mano</td>
 <td style="text-align: left;">ŋwɛ́ŋ̀</td>
 <td style="text-align: right;">5</td>
@@ -2961,138 +2958,1925 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>в лома есть адлоги mà и mà̀ (с двумя знаками тона). Кроме того есть адлог loc.</li>
 <li>в мано есть адлоги píé и píé (я не понимаю в чем разница…).</li>
 </ul>
+<p>Проблемы на 15.02.2023:</p>
+<ul>
+<li>В гуро ɓa̰ и ɓā̰ — разное?</li>
+<li>В гуро ya̰ и yā̰ — разное?</li>
+</ul>
+<p>Я не совсем понял, что написала МХ, так что я пока посчитал вот такое вот. Какие адлоги из разных языков встречаются друг с другом в одной расширеной конструкции внутри одного стимула?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(adposition)) <span class="sc">%&gt;%</span>  </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(language, <span class="st">"__"</span>, adposition)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  widyr<span class="sc">::</span><span class="fu">pairwise_count</span>(adposition, extended_construction)  <span class="sc">%&gt;%</span> </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item1, item2) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">item1</th>
+<th style="text-align: left;">item2</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: left;">Dan_Gweetaa__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: left;">Guro__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: left;">Kpelle__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__loc</td>
+<td style="text-align: left;">Looma__loc</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__dhɛ̏</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Looma__sù</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__sù</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Dan_Gweetaa__dhɛ̏</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhàa</td>
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhàa</td>
+<td style="text-align: left;">Looma__bù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhàa</td>
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Looma__sù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__dhɛ̏</td>
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Mano__gɛ̀nɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: left;">Looma__sù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Guro__yā̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__kèŋ̏</td>
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__kèŋ̏</td>
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__kèŋ̏</td>
+<td style="text-align: left;">Looma__pòlù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__pi̋ɤ</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__pi̋ɤ</td>
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__pi̋ɤ</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: left;">Guro__jì</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__zɯ̏</td>
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dan_Gweetaa__zɯ̏</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan_Gweetaa__zɯ̏</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__jì</td>
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__jì</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: left;">Dan_Gweetaa__dhɛ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Dan_Gweetaa__pi̋ɤ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__yā̰</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__yā̰</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: left;">Dan_Gweetaa__zɯ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: left;">Dan_Gweetaa__kèŋ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: left;">Looma__pòlù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Looma__kómá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: left;">Dan_Gweetaa__bhàa</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: left;">Looma__bù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: left;">Mano__yí</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__lá</td>
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__lá</td>
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: left;">Dan_Gweetaa__kèŋ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: left;">Looma__pòlù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: left;">Dan_Gweetaa__pi̋ɤ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__yêi</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bù</td>
+<td style="text-align: left;">Dan_Gweetaa__bhàa</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bù</td>
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bù</td>
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Guro__yā̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__kómá</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Dan_Gweetaa__zɯ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Guro__jì</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: left;">Mano__yí</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__pòlù</td>
+<td style="text-align: left;">Dan_Gweetaa__kèŋ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__pòlù</td>
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__pòlù</td>
+<td style="text-align: left;">Kpelle__púlû</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__sù</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__sù</td>
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: left;">Dan_Gweetaa__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: left;">Kpelle__lá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: left;">Dan_Gweetaa__bhàa</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: left;">Dan_Gweetaa__bhȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: left;">Looma__bù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__bà</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__gɛ̀nɛ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Looma__gà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Mano__yí</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__kɛ̀lɛ̀</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: left;">Guro__lɛ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: left;">Guro__ta</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: left;">Kpelle__lá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__là</td>
+<td style="text-align: left;">Looma__yà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Dan_Gweetaa__gɔ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Guro__leè</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Looma__bà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__gɯ́</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__tȁ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Dan_Gweetaa__zɯ̏</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Guro__ya̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Guro__zì</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Kpelle__à</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Looma__bɛ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Dan_Gweetaa__pi̋ɤ</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Guro__zuo</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Looma__tá</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Mano__lɛ̀ɛ̄</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__píé</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__yí</td>
+<td style="text-align: left;">Kpelle__hù</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__yí</td>
+<td style="text-align: left;">Looma__mà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__yí</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Guro__và</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Guro__ɓa̰</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Kpelle__pɔ́</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Kpelle__ɓà</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Mano__ká</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mano__ŋwɛ́ŋ̀</td>
+<td style="text-align: left;">Mano__mɔ̀</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Я попробовал сделать таблицу, но она получается огромная…</p>
 </div>
 <div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"mano + kpelle"</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Mano construction</span><span class="st">`</span>,</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Mano extended construction type</span><span class="st">`</span>,</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Mano Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Mano"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  mano</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kpelle construction</span><span class="st">`</span>,</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kpelle extended construction type</span><span class="st">`</span>,</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kpelle postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kpelle"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  kpelle</span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mano_kpelle_pre)</span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"kono"</span>)</span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kono construction...8</span><span class="st">`</span>,</span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kono extended construction</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adposition =</span> <span class="st">""</span>,</span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">language =</span> <span class="st">"Kono"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>  kono</span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(kono_pre)</span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Looma extended construction"</span></span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Looma"</span>)</span>
-<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Looma construction</span><span class="st">`</span>,</span>
-<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Looma extended construction</span><span class="st">`</span>,</span>
-<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Looma Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Looma"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  looma</span>
-<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(looma_pre)</span>
-<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Guro extended construction"</span></span>
-<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Guro"</span>)</span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Guro construction</span><span class="st">`</span>,</span>
-<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Guro extended construction</span><span class="st">`</span>,</span>
-<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Guro Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Guro"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>  guro</span>
-<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(guro_pre)</span>
-<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Dan Gweetaa from Vydrin"</span>)</span>
-<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Dan construction</span><span class="st">`</span>,</span>
-<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Dan extended construction type</span><span class="st">`</span>,</span>
-<span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Dan Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-77"><a href="#cb27-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Dan_Gweetaa"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-78"><a href="#cb27-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-79"><a href="#cb27-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb27-80"><a href="#cb27-80" aria-hidden="true" tabindex="-1"></a>  dan</span>
-<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(dan_pre)</span>
-<span id="cb27-83"><a href="#cb27-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-84"><a href="#cb27-84" aria-hidden="true" tabindex="-1"></a>guro <span class="sc">%&gt;%</span> </span>
-<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(kono, kpelle, looma, mano, dan) <span class="sc">%&gt;%</span></span>
-<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">"../GM_merged.csv"</span>, <span class="at">na =</span> <span class="st">""</span>)</span>
-<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-88"><a href="#cb27-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-89"><a href="#cb27-89" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"stimuli_general"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-90"><a href="#cb27-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Number, <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>, <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a>         <span class="at">predicate_eng =</span> <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>,</span>
-<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a>         <span class="at">stimuli =</span> <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>,</span>
-<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a>         <span class="at">semantic_type =</span> <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="ot">-&gt;</span></span>
-<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a>  stimuli</span>
-<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
-<span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(number, <span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language, n) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">construction =</span> <span class="fu">str_c</span>(construction, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-106"><a href="#cb27-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> construction, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-107"><a href="#cb27-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-108"><a href="#cb27-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb27-109"><a href="#cb27-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb27-110"><a href="#cb27-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-111"><a href="#cb27-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-112"><a href="#cb27-112" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide.xlsx"</span>)</span>
-<span id="cb27-113"><a href="#cb27-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-114"><a href="#cb27-114" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-115"><a href="#cb27-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
-<span id="cb27-116"><a href="#cb27-116" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-117"><a href="#cb27-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
-<span id="cb27-118"><a href="#cb27-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-119"><a href="#cb27-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-120"><a href="#cb27-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(adposition, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-121"><a href="#cb27-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> adposition, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-122"><a href="#cb27-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-123"><a href="#cb27-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb27-124"><a href="#cb27-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb27-125"><a href="#cb27-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-126"><a href="#cb27-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-127"><a href="#cb27-127" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_adpositions.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"mano + kpelle"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Mano construction</span><span class="st">`</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Mano extended construction type</span><span class="st">`</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Mano Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Mano"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  mano</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kpelle construction</span><span class="st">`</span>,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kpelle extended construction type</span><span class="st">`</span>,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kpelle postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kpelle"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>  kpelle</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mano_kpelle_pre)</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"kono"</span>)</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kono construction...8</span><span class="st">`</span>,</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kono extended construction</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adposition =</span> <span class="st">""</span>,</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">language =</span> <span class="st">"Kono"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>  kono</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(kono_pre)</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Looma extended construction"</span></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Looma"</span>)</span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Looma construction</span><span class="st">`</span>,</span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Looma extended construction</span><span class="st">`</span>,</span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Looma Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Looma"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>  looma</span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(looma_pre)</span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Guro extended construction"</span></span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Guro"</span>)</span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Guro construction</span><span class="st">`</span>,</span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Guro extended construction</span><span class="st">`</span>,</span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Guro Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Guro"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a>  guro</span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(guro_pre)</span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Dan Gweetaa from Vydrin"</span>)</span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Dan construction</span><span class="st">`</span>,</span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Dan extended construction type</span><span class="st">`</span>,</span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Dan Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Dan_Gweetaa"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a>  dan</span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(dan_pre)</span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a>guro <span class="sc">%&gt;%</span> </span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(kono, kpelle, looma, mano, dan) <span class="sc">%&gt;%</span></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">"../GM_merged.csv"</span>, <span class="at">na =</span> <span class="st">""</span>)</span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"stimuli_general"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Number, <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>, <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a>         <span class="at">predicate_eng =</span> <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>,</span>
+<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a>         <span class="at">stimuli =</span> <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>,</span>
+<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a>         <span class="at">semantic_type =</span> <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="ot">-&gt;</span></span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a>  stimuli</span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(number, <span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language, n) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">construction =</span> <span class="fu">str_c</span>(construction, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> construction, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide.xlsx"</span>)</span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(adposition, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> adposition, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_adpositions.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

@@ -16,6 +16,7 @@ editor_options:
 # setwd("/home/agricolamz/work/articles/2023_Mande_Say_Khachaturyan_Konoshenko/repo")
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.width = 10, fig.height = 7)
 library(tidyverse)
+library(widyr)
 library(phangorn)
 theme_set(theme_bw()+theme(text = element_text(size = 16)))
 df_wide <- readxl::read_xlsx("../GM_merged_wide.xlsx")
@@ -77,7 +78,7 @@ df %>%
          !is.na(extended_construction)) %>% 
   arrange(language) %>% 
   distinct(language, number) %>% 
-  widyr::pairwise_count(language, number) %>% 
+  pairwise_count(language, number) %>% 
   rename(total = n) ->
   df_pairwise_total
 
@@ -94,7 +95,7 @@ df %>%
          !is.na(extended_construction)) %>% 
   group_by(number) %>% 
   arrange(language) %>% 
-  widyr::pairwise_count(language, extended_construction) %>% 
+  pairwise_count(language, extended_construction) %>% 
   group_by(item1, item2) %>% 
   summarise(n = sum(n)) ->
   df_pairwise_within_construction
@@ -412,12 +413,14 @@ df %>%
 Ну вот примерно, то, что ты имела в виду, наверное, но это все нужно пересчитать, после того, как мы утвердим тип каждой из конструкции.
 
 
-## Послелоги
+## Адлоги
 
-Какие послелоги есть для каждого языка?
+Какие адлоги есть для каждого языка?
 
 ```{r}
-df %>% 
+df %>%
+  mutate(adposition = str_split(adposition, ", ")) %>% 
+  unnest_longer(adposition) %>% 
   count(language, adposition) %>% 
   na.omit()
 ```
@@ -429,6 +432,28 @@ df %>%
 - в гуро есть адлоги léè и leè, lɛ̄ и lɛ, ɓa̰ и ɓā̰. Кроме того есть адлог loc.
 - в лома есть адлоги mà и mà̀ (с двумя знаками тона). Кроме того есть адлог loc.
 - в мано есть адлоги píé и píé (я не понимаю в чем разница...).
+
+Проблемы на 15.02.2023:
+
+- В гуро ɓa̰ и ɓā̰ --- разное?
+- В гуро ya̰ и yā̰ --- разное?
+
+Я не совсем понял, что написала МХ, так что я пока посчитал вот такое вот. Какие адлоги из разных языков встречаются друг с другом в одной расширеной конструкции внутри одного стимула?
+
+```{r}
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction),
+         !is.na(adposition)) %>%  
+  group_by(number) %>% 
+  mutate(adposition = str_c(language, "__", adposition)) %>% 
+  widyr::pairwise_count(adposition, extended_construction)  %>% 
+  group_by(item1, item2) %>% 
+  summarise(n = sum(n)) %>% 
+  arrange(desc(n))
+```
+
+Я попробовал сделать таблицу, но она получается огромная...
 
 ## Preprocessing
 
