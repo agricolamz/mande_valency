@@ -335,6 +335,44 @@ title(main = "Выборка стимулов со всеми 6 языками")
 
 :::
 
+> Интересно, что выборка со случайным эквивалентом и выборка только тех стимулов, где есть данные по всем шести языкам, дает такие разные результаты. Что будет если взять выборку данных по всем языкам и В НЕЙ провести случайную выборку эквивалентной конструкции?
+
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r stimuli-sample-all-langs-and-random}
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction),
+         number %in% to_keep) %>%
+  group_by(number, language) %>% 
+  sample_n(1) %>% 
+  ungroup() %>% 
+  mutate(extended_construction = 1) %>% 
+  pivot_wider(names_from = language, values_from = extended_construction, values_fill = 0) %>% 
+  select(Dan_Gweetaa:Mano)  %>% 
+  t() %>% 
+  dist(method = "binary") ->
+  stimuli_sample_all_langs_and_random
+
+stimuli_sample_all_langs_and_random %>% 
+  hclust() %>% 
+  plot(main = "Выборка стимулов со всеми 6 языками (случайный эквивалент)")
+```
+
+### neighbornet
+
+```{r stimuli-sample-all-langs-and-random-nn}
+stimuli_sample_all_langs_and_random  %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Выборка стимулов со всеми 6 языками  (случайный эквивалент)")
+```
+
+:::
+
 ## Группировка по языкам
 
 Перед тем, как приступить к перекодированию, которое предложила Маша К., посмотрим статистику конструкций по языкам:
