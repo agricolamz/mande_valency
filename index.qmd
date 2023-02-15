@@ -495,7 +495,61 @@ df %>%
   arrange(desc(n))
 ```
 
-Я попробовал сделать таблицу, но она получается огромная...
+Я попробовал сделать таблицу, но она получается огромная... Возьмем только примеры, где больше одного:
+
+```{r}
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction),
+         !is.na(adposition)) %>%  
+  group_by(number) %>% 
+  mutate(adposition = str_c(language, "__", adposition)) %>% 
+  pairwise_count(adposition, extended_construction) %>% 
+  group_by(item1, item2) %>% 
+  summarise(n = sum(n)) %>% 
+  filter(n > 1) %>% 
+  mutate(item1 = fct_reorder(item1, n, .desc = TRUE),
+         item2 = fct_reorder(item2, n, .desc = TRUE)) %>% 
+  ggplot(aes(item1, item2))+
+  geom_tile(aes(fill = n), colour = "white") +
+  geom_text(aes(label = n), colour = "white") +
+  scale_fill_gradient(low = "tomato", high = "darkred")+
+  coord_fixed()+
+  labs(x = "", y = "") +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 90, vjust = 0, hjust=1))
+```
+
+Вот так я понял Машину идеи про то, как посмотреть соответствия между языками, берите лупу: 
+
+```{r}
+#| fig-height: 15
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction),
+         !is.na(adposition)) %>%  
+  group_by(number) %>% 
+  mutate(adposition = str_c(language, "__", adposition)) %>% 
+  pairwise_count(adposition, extended_construction) %>% 
+  group_by(item1, item2) %>% 
+  summarise(n = sum(n)) %>% 
+  filter(n > 1) %>% 
+  separate(item1, into = c("language1", "adposition1"), sep = "__") %>% 
+  separate(item2, into = c("language2", "adposition2"), sep = "__") %>% 
+  group_by(language1, language2, adposition1) %>% 
+  summarize(ratio = n/sum(n),
+            n = n,
+            adposition2 = adposition2) %>% 
+  distinct() %>% 
+  ggplot(aes(ratio, adposition1, label = str_c(adposition2, "% \n",
+                                               round(ratio*100), "(",
+                                               n, ")")))+
+  geom_col(color = "white")+
+  geom_label(position = position_stack(vjust = .5), size = 2)+
+  facet_grid(language1~language2, scales = "free")+
+  labs(y = "")
+```
+
 
 ## Preprocessing
 
