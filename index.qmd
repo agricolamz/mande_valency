@@ -587,8 +587,8 @@ df %>%
             n = n,
             adposition2 = adposition2) %>% 
   distinct() %>% 
-  ggplot(aes(ratio, adposition1, label = str_c(adposition2, "% \n",
-                                               round(ratio*100), "(",
+  ggplot(aes(ratio, adposition1, label = str_c(adposition2, "\n",
+                                               round(ratio*100), "% (",
                                                n, ")")))+
   geom_col(color = "white")+
   geom_label(position = position_stack(vjust = .5), size = 2)+
