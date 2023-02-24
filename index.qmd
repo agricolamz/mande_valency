@@ -34,10 +34,101 @@ readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") %>%
          stimuli = `Stimulus sentence (SAY)`,
          semantic_type = `Semantic types`) ->
   stimuli
+df %>% 
+  count(number, language) %>% 
+  count(number) %>%
+  filter(n == 6) %>% 
+  pull(number) ->
+  to_keep
 ```
 
 
 ::: {.panel-tabset}
+
+## Конструкции главное
+
+Здесь одно и то же расстояние по хитмэпу, кластеризации:
+
+::: {.panel-tabset}
+
+# heatmap
+
+```{r heatmap-golden-stadard}
+df %>% 
+  filter(number %in% to_keep,
+         !str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>% 
+  arrange(language)  %>% 
+  distinct(language, number, extended_construction)  %>% 
+  pairwise_count(language, number) %>% 
+  rename(total = n) ->
+  df_pairwise_total
+
+df %>% 
+  filter(number %in% to_keep,
+         !str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>% 
+  group_by(number) %>% 
+  arrange(language) %>% 
+  pairwise_count(language, extended_construction)  %>% 
+  mutate(n = 1) %>% 
+  group_by(item1, item2) %>% 
+  summarise(n = sum(n)) -> 
+  df_pairwise_within_construction
+
+df_pairwise_total %>% 
+  left_join(df_pairwise_within_construction) %>%  
+  mutate(percentage = round(n/total*100, 2),
+         item1 = case_match(item1, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item1),
+         item2 = case_match(item2, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item2)) %>% 
+  select(item1, item2, percentage) %>% 
+  ggplot(aes(item1, item2))+
+  geom_tile(aes(fill = percentage), colour = "white") +
+  geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
+  scale_fill_gradient(low = "lightblue", high = "navy")+
+  coord_fixed()+
+  labs(x = "", y = "", title = "Стимулы всех 6 языков, расстояние heatmap") +
+  theme(legend.position = "bottom")
+```
+
+### hclust
+
+```{r hclust-golden-stadard}
+df_pairwise_total %>% 
+  left_join(df_pairwise_within_construction) %>%  
+  mutate(percentage = 100-round(n/total*100, 2),
+         item1 = case_match(item1, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item1),
+         item2 = case_match(item2, 
+                            "Dan_Gweetaa" ~ "Dan Gweetaa",
+                            .default = item2)) %>% 
+  select(item1, item2, percentage) %>% 
+  pivot_wider(names_from = item2, values_from = percentage) %>% 
+  arrange(item1) %>% 
+  select(-item1) %>% 
+  as.dist() ->
+  dist_gold_standard
+
+dist_gold_standard %>%   
+  hclust() %>% 
+  plot(main = "Стимулы всех 6 языков, расстояние heatmap")
+```
+
+### neighbornet
+
+```{r nn-golden-stadard}
+dist_gold_standard %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Стимулы всех 6 языков, расстояние heatmap")
+```
+
+:::
 
 ## Конструкции
 
@@ -316,9 +407,10 @@ df %>%
 
 ```{r stimuli-sample-all-langs}
 df_wide %>% 
-  filter(number %in% to_keep) %>% 
+  filter(number %in% to_keep) %>%  
   mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)})) %>% 
   select(Guro:Kpelle) %>% 
+  count(Guro, Looma) %>% 
   t() %>% 
   dist(method = "binary") ->
   stimuli_sample_all_langs
@@ -344,8 +436,8 @@ df %>%
   filter(number %in% to_keep,
          !str_detect(construction, "no equivalent"),
          !is.na(extended_construction)) %>% 
-  arrange(language) %>% 
-  distinct(language, number) %>% 
+  arrange(language)  %>% 
+  distinct(language, number, extended_construction)  %>% 
   pairwise_count(language, number) %>% 
   rename(total = n) ->
   df_pairwise_total
@@ -356,14 +448,14 @@ df %>%
          !is.na(extended_construction)) %>% 
   group_by(number) %>% 
   arrange(language) %>% 
-  pairwise_count(language, extended_construction) %>% 
-  mutate(n = 1) %>% # to unify
+  pairwise_count(language, extended_construction)  %>% 
+  mutate(n = 1) %>% 
   group_by(item1, item2) %>% 
-  summarise(n = sum(n)) ->
+  summarise(n = sum(n)) -> 
   df_pairwise_within_construction
 
 df_pairwise_total %>% 
-  left_join(df_pairwise_within_construction) %>% 
+  left_join(df_pairwise_within_construction) %>%  
   mutate(percentage = round(n/total*100, 2),
          item1 = case_match(item1, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
