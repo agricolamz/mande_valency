@@ -51,7 +51,7 @@ df %>%
 
 ::: {.panel-tabset}
 
-# heatmap
+### heatmap
 
 ```{r heatmap-golden-stadard}
 df %>% 
