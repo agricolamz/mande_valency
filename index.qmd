@@ -408,9 +408,8 @@ df %>%
 ```{r stimuli-sample-all-langs}
 df_wide %>% 
   filter(number %in% to_keep) %>%  
-  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)})) %>% 
+  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)}))  %>% 
   select(Guro:Kpelle) %>% 
-  count(Guro, Looma) %>% 
   t() %>% 
   dist(method = "binary") ->
   stimuli_sample_all_langs
@@ -701,9 +700,11 @@ mano_kpelle_pre %>%
   rename(number = Number,
          construction = `Mano construction`,
          extended_construction = `Mano extended construction type`,
-         adposition = `Mano Postposition`) %>% 
+         adposition = `Mano Postposition`,
+         verb = `Mano verb`,
+         verb_meaning = `Mano Complex verb meaning`) %>% 
   mutate(language = "Mano") %>% 
-  select(number, construction, extended_construction, adposition, language) %>% 
+  select(number, construction, extended_construction, adposition, verb, verb_meaning, language) %>% 
   filter(!is.na(construction)) ->
   mano
 
@@ -711,9 +712,11 @@ mano_kpelle_pre %>%
   rename(number = Number,
          construction = `Kpelle construction`,
          extended_construction = `Kpelle extended construction type`,
-         adposition = `Kpelle postposition`) %>% 
+         adposition = `Kpelle postposition`,
+         verb = `Kpelle verb`,
+         verb_meaning = `Kpelle complex verb meaning`) %>% 
   mutate(language = "Kpelle") %>% 
-  select(number, construction, extended_construction, adposition, language) %>% 
+  select(number, construction, extended_construction, adposition, verb, verb_meaning, language) %>% 
   filter(!is.na(construction)) ->
   kpelle
 
@@ -726,8 +729,10 @@ kono_pre %>%
          construction = `Kono construction...8`,
          extended_construction = `Kono extended construction`,
          adposition = `Kono adposition`) %>% 
-  mutate(language = "Kono") %>% 
-  select(number, construction, extended_construction, adposition, language) %>% 
+  mutate(language = "Kono",
+         verb = "",
+         verb_meaning = "") %>% 
+  select(number, construction, extended_construction, adposition, verb, verb_meaning, language) %>% 
   filter(!is.na(construction)) ->
   kono
 
@@ -740,9 +745,11 @@ looma_pre %>%
   rename(number = Number,
          construction = `Looma construction`,
          extended_construction = `Looma extended construction`,
-         adposition = `Looma Postposition`) %>% 
+         adposition = `Looma Postposition`,
+         verb = `Looma Verb`,
+         verb_meaning = `Looma Complex Verb`) %>% 
   mutate(language = "Looma") %>% 
-  select(number, construction, extended_construction, adposition, language) %>% 
+  select(number, construction, extended_construction, adposition, verb, verb_meaning, language) %>% 
   filter(!is.na(construction)) ->
   looma
 
@@ -755,9 +762,11 @@ guro_pre %>%
   rename(number = Number,
          construction = `Guro construction`,
          extended_construction = `Guro extended construction`,
-         adposition = `Guro Postposition`) %>% 
+         adposition = `Guro Postposition`,
+         verb = `Guro Verb`,
+         verb_meaning = `Guro Complex Verb`) %>% 
   mutate(language = "Guro") %>% 
-  select(number, construction, extended_construction, adposition, language) %>% 
+  select(number, construction, extended_construction, adposition, verb, verb_meaning, language) %>% 
   filter(!is.na(construction)) ->
   guro
 
@@ -769,9 +778,11 @@ dan_pre %>%
   rename(number = Number,
          construction = `Dan construction`,
          extended_construction = `Dan extended construction type`,
-         adposition = `Dan Postposition`) %>% 
+         adposition = `Dan Postposition`,
+         verb = `Dan Verb`, 
+         verb_meaning = `Dan complex verb meaning`) %>% 
   mutate(language = "Dan_Gweetaa") %>% 
-  select(number, construction, extended_construction, adposition, language) %>% 
+  select(number, construction, extended_construction, adposition, verb, verb_meaning, language) %>% 
   filter(!is.na(construction)) ->
   dan
 
@@ -821,6 +832,38 @@ read_csv("../GM_merged.csv") %>%
   left_join(stimuli) %>% 
   select(number, semantic_type, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
   writexl::write_xlsx("../GM_merged_wide_adpositions.xlsx")
+
+read_csv("../GM_merged.csv") %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction)) %>%
+  select(-construction) %>%
+  distinct(number, extended_construction, language, verb) %>% 
+  group_by(number, extended_construction, language) %>% 
+  summarise(verb = str_c(verb, collapse = "; ")) %>% 
+  pivot_wider(names_from = language, values_from = verb, values_fill = "") %>% 
+  group_by(number) %>% 
+  mutate(id = 1:n()) %>%
+  ungroup() %>% 
+  left_join(stimuli) %>% 
+  select(number, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kpelle) %>% 
+  writexl::write_xlsx("../GM_merged_wide_verb.xlsx")
+
+read_csv("../GM_merged.csv") %>%
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(extended_construction),
+         !is.na(verb_meaning)) %>%
+  select(-construction) %>%
+  distinct(number, extended_construction, language, verb, verb_meaning) %>% 
+  mutate(verb_meaning = str_c(verb_meaning, " (", verb, ")")) %>% 
+  group_by(number, extended_construction, language) %>%
+  summarise(verb_meaning = str_c(verb_meaning, collapse = "; ")) %>%
+  pivot_wider(names_from = language, values_from = verb_meaning, values_fill = "") %>%
+  group_by(number) %>%
+  mutate(id = 1:n()) %>%
+  ungroup() %>%
+  left_join(stimuli) %>%
+  select(number, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kpelle) %>%
+  writexl::write_xlsx("../GM_merged_wide_verb_meaning.xlsx")
 ```
 
 :::

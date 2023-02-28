@@ -240,12 +240,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output-display">
 <div class="kable-table">
 <table>
+<colgroup>
+<col style="width: 8%">
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 13%">
+<col style="width: 6%">
+<col style="width: 16%">
+<col style="width: 11%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;">number</th>
 <th style="text-align: left;">construction</th>
 <th style="text-align: left;">extended_construction</th>
 <th style="text-align: left;">adposition</th>
+<th style="text-align: left;">verb</th>
+<th style="text-align: left;">verb_meaning</th>
 <th style="text-align: left;">language</th>
 </tr>
 </thead>
@@ -836,16 +847,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_wide <span class="sc">%&gt;%</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(number <span class="sc">%in%</span> to_keep) <span class="sc">%&gt;%</span>  </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Guro<span class="sc">:</span>Kpelle, <span class="cf">function</span>(x){<span class="fu">ifelse</span>(<span class="fu">is.na</span>(x), <span class="dv">0</span>, <span class="dv">1</span>)})) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Guro<span class="sc">:</span>Kpelle, <span class="cf">function</span>(x){<span class="fu">ifelse</span>(<span class="fu">is.na</span>(x), <span class="dv">0</span>, <span class="dv">1</span>)}))  <span class="sc">%&gt;%</span> </span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Guro<span class="sc">:</span>Kpelle) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Guro, Looma) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dist</span>(<span class="at">method =</span> <span class="st">"binary"</span>) <span class="ot">-&gt;</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  stimuli_sample_all_langs</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>stimuli_sample_all_langs <span class="sc">%&gt;%</span> </span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hclust</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">main =</span> <span class="st">"Выборка стимулов со всеми 6 языками"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dist</span>(<span class="at">method =</span> <span class="st">"binary"</span>) <span class="ot">-&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  stimuli_sample_all_langs</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>stimuli_sample_all_langs <span class="sc">%&gt;%</span> </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hclust</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">main =</span> <span class="st">"Выборка стимулов со всеми 6 языками"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/stimuli-sample-all-langs-1.png" class="img-fluid" width="960"></p>
@@ -5504,126 +5514,170 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Mano construction</span><span class="st">`</span>,</span>
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Mano extended construction type</span><span class="st">`</span>,</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Mano Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Mano"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  mano</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kpelle construction</span><span class="st">`</span>,</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kpelle extended construction type</span><span class="st">`</span>,</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kpelle postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kpelle"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  kpelle</span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mano_kpelle_pre)</span>
-<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"kono"</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Mano Postposition</span><span class="st">`</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb =</span> <span class="st">`</span><span class="at">Mano verb</span><span class="st">`</span>,</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb_meaning =</span> <span class="st">`</span><span class="at">Mano Complex verb meaning</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Mano"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, verb, verb_meaning, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  mano</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>mano_kpelle_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kpelle construction</span><span class="st">`</span>,</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kpelle extended construction type</span><span class="st">`</span>,</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kpelle postposition</span><span class="st">`</span>,</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb =</span> <span class="st">`</span><span class="at">Kpelle verb</span><span class="st">`</span>,</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb_meaning =</span> <span class="st">`</span><span class="at">Kpelle complex verb meaning</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kpelle"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, verb, verb_meaning, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>  kpelle</span>
 <span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kono construction...8</span><span class="st">`</span>,</span>
-<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kono extended construction</span><span class="st">`</span>,</span>
-<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kono adposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kono"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>  kono</span>
-<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(kono_pre)</span>
-<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Looma extended construction"</span></span>
-<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Looma"</span>)</span>
-<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Looma construction</span><span class="st">`</span>,</span>
-<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Looma extended construction</span><span class="st">`</span>,</span>
-<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Looma Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Looma"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a>  looma</span>
-<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(looma_pre)</span>
-<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Guro extended construction"</span></span>
-<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Guro"</span>)</span>
-<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Guro construction</span><span class="st">`</span>,</span>
-<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Guro extended construction</span><span class="st">`</span>,</span>
-<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Guro Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Guro"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a>  guro</span>
-<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(guro_pre)</span>
-<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Dan Gweetaa from Vydrin"</span>)</span>
-<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="sc">%&gt;%</span> </span>
-<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Dan construction</span><span class="st">`</span>,</span>
-<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Dan extended construction type</span><span class="st">`</span>,</span>
-<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Dan Postposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Dan_Gweetaa"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
-<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a>  dan</span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mano_kpelle_pre)</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"kono"</span>)</span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>kono_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Kono construction...8</span><span class="st">`</span>,</span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Kono extended construction</span><span class="st">`</span>,</span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Kono adposition</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Kono"</span>,</span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb =</span> <span class="st">""</span>,</span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb_meaning =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, verb, verb_meaning, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a>  kono</span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(kono_pre)</span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Looma extended construction"</span></span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Looma"</span>)</span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>looma_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Looma construction</span><span class="st">`</span>,</span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Looma extended construction</span><span class="st">`</span>,</span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Looma Postposition</span><span class="st">`</span>,</span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb =</span> <span class="st">`</span><span class="at">Looma Verb</span><span class="st">`</span>,</span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb_meaning =</span> <span class="st">`</span><span class="at">Looma Complex Verb</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Looma"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, verb, verb_meaning, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a>  looma</span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(looma_pre)</span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a><span class="co"># I renamed one of the columns to "Guro extended construction"</span></span>
+<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Guro"</span>)</span>
+<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a>guro_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Guro construction</span><span class="st">`</span>,</span>
+<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Guro extended construction</span><span class="st">`</span>,</span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Guro Postposition</span><span class="st">`</span>,</span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb =</span> <span class="st">`</span><span class="at">Guro Verb</span><span class="st">`</span>,</span>
+<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb_meaning =</span> <span class="st">`</span><span class="at">Guro Complex Verb</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Guro"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, verb, verb_meaning, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a>  guro</span>
+<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(guro_pre)</span>
+<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Dan Gweetaa from Vydrin"</span>)</span>
 <span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(dan_pre)</span>
-<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a>guro <span class="sc">%&gt;%</span> </span>
-<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(kono, kpelle, looma, mano, dan) <span class="sc">%&gt;%</span></span>
-<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">"../GM_merged.csv"</span>, <span class="at">na =</span> <span class="st">""</span>)</span>
-<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"stimuli_general"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Number, <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>, <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
-<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a>         <span class="at">predicate_eng =</span> <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>,</span>
-<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a>         <span class="at">stimuli =</span> <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>,</span>
-<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a>         <span class="at">semantic_type =</span> <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="ot">-&gt;</span></span>
-<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a>  stimuli</span>
-<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-97"><a href="#cb36-97" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
-<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
-<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(number, <span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language, n) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">construction =</span> <span class="fu">str_c</span>(construction, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> construction, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide.xlsx"</span>)</span>
-<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
-<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
-<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
-<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, adposition) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(adposition, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> adposition, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-123"><a href="#cb36-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_adpositions.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a>dan_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a>         <span class="at">construction =</span> <span class="st">`</span><span class="at">Dan construction</span><span class="st">`</span>,</span>
+<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a>         <span class="at">extended_construction =</span> <span class="st">`</span><span class="at">Dan extended construction type</span><span class="st">`</span>,</span>
+<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a>         <span class="at">adposition =</span> <span class="st">`</span><span class="at">Dan Postposition</span><span class="st">`</span>,</span>
+<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb =</span> <span class="st">`</span><span class="at">Dan Verb</span><span class="st">`</span>, </span>
+<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a>         <span class="at">verb_meaning =</span> <span class="st">`</span><span class="at">Dan complex verb meaning</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">language =</span> <span class="st">"Dan_Gweetaa"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, construction, extended_construction, adposition, verb, verb_meaning, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(construction)) <span class="ot">-&gt;</span></span>
+<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a>  dan</span>
+<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(dan_pre)</span>
+<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a>guro <span class="sc">%&gt;%</span> </span>
+<span id="cb36-97"><a href="#cb36-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(kono, kpelle, looma, mano, dan) <span class="sc">%&gt;%</span></span>
+<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">"../GM_merged.csv"</span>, <span class="at">na =</span> <span class="st">""</span>)</span>
+<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"../say_stimuli.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"stimuli_general"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Number, <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>, <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">number =</span> Number,</span>
+<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a>         <span class="at">predicate_eng =</span> <span class="st">`</span><span class="at">English predicate</span><span class="st">`</span>,</span>
+<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a>         <span class="at">stimuli =</span> <span class="st">`</span><span class="at">Stimulus sentence (SAY)</span><span class="st">`</span>,</span>
+<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a>         <span class="at">semantic_type =</span> <span class="st">`</span><span class="at">Semantic types</span><span class="st">`</span>) <span class="ot">-&gt;</span></span>
+<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a>  stimuli</span>
+<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(extended_construction) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(number, <span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language, n) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">construction =</span> <span class="fu">str_c</span>(construction, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> construction, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-123"><a href="#cb36-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, n, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide.xlsx"</span>)</span>
+<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb36-128"><a href="#cb36-128" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-129"><a href="#cb36-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
+<span id="cb36-130"><a href="#cb36-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, adposition) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-131"><a href="#cb36-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">adposition =</span> <span class="fu">str_c</span>(adposition, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> adposition, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-135"><a href="#cb36-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb36-136"><a href="#cb36-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, semantic_type, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-139"><a href="#cb36-139" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_adpositions.xlsx"</span>)</span>
+<span id="cb36-140"><a href="#cb36-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-141"><a href="#cb36-141" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-142"><a href="#cb36-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
+<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, verb) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">verb =</span> <span class="fu">str_c</span>(verb, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> verb, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb36-151"><a href="#cb36-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb36-152"><a href="#cb36-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-153"><a href="#cb36-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kpelle) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-154"><a href="#cb36-154" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_verb.xlsx"</span>)</span>
+<span id="cb36-155"><a href="#cb36-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../GM_merged.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(construction, <span class="st">"no equivalent"</span>),</span>
+<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(extended_construction),</span>
+<span id="cb36-159"><a href="#cb36-159" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(verb_meaning)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-160"><a href="#cb36-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>construction) <span class="sc">%&gt;%</span></span>
+<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(number, extended_construction, language, verb, verb_meaning) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">verb_meaning =</span> <span class="fu">str_c</span>(verb_meaning, <span class="st">" ("</span>, verb, <span class="st">")"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-163"><a href="#cb36-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number, extended_construction, language) <span class="sc">%&gt;%</span></span>
+<span id="cb36-164"><a href="#cb36-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">verb_meaning =</span> <span class="fu">str_c</span>(verb_meaning, <span class="at">collapse =</span> <span class="st">"; "</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> language, <span class="at">values_from =</span> verb_meaning, <span class="at">values_fill =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(number) <span class="sc">%&gt;%</span></span>
+<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stimuli) <span class="sc">%&gt;%</span></span>
+<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(number, predicate_eng, stimuli, id, extended_construction, Guro, Looma, Mano, Dan_Gweetaa, Kpelle) <span class="sc">%&gt;%</span></span>
+<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a>  writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"../GM_merged_wide_verb_meaning.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
