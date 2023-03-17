@@ -91,7 +91,7 @@ df_pairwise_total %>%
   geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
   scale_fill_gradient(low = "lightblue", high = "navy")+
   coord_fixed()+
-  labs(x = "", y = "", title = "Стимулы всех 6 языков, расстояние heatmap") +
+  labs(x = "", y = "", title = "Heatmap for all stimuli") +
   theme(legend.position = "bottom")
 ```
 
@@ -116,7 +116,7 @@ df_pairwise_total %>%
 
 dist_gold_standard %>%   
   hclust() %>% 
-  plot(main = "Стимулы всех 6 языков, расстояние heatmap")
+  plot(main = "Clusterization for all stimuli")
 ```
 
 ### neighbornet
@@ -125,7 +125,7 @@ dist_gold_standard %>%
 dist_gold_standard %>% 
   neighborNet() %>% 
   plot()
-title(main = "Стимулы всех 6 языков, расстояние heatmap")
+title(main = "Heatmap for all stimuli")
 ```
 
 :::
@@ -328,7 +328,7 @@ df %>%
 
 sample_random_construction %>% 
   hclust() %>% 
-  plot(main = "Выборка со случайным эквивалентом для каждого языка")
+  plot(main = "Clusterization with a random equivalent")
 ```
 
 ### neighbornet
@@ -416,7 +416,7 @@ df_wide %>%
 
 stimuli_sample_all_langs %>% 
   hclust() %>% 
-  plot(main = "Выборка стимулов со всеми 6 языками")
+  plot(main = "Clusterization for only common stimuli")
 ```
 
 ### neighbornet
@@ -499,7 +499,7 @@ df %>%
 
 stimuli_sample_all_langs_and_random %>% 
   hclust() %>% 
-  plot(main = "Выборка стимулов со всеми 6 языками (случайный эквивалент)")
+  plot(main = "Clusterization with a random equivalent (only common stimuli)")
 ```
 
 ### neighbornet
