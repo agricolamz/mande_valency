@@ -347,7 +347,7 @@ df %>%
 sample_random_construction %>% 
   hclust() %>% 
   as.phylo() %>% 
-  plot(main = "Clusterization with a random equivalent",
+  plot(main = "Clusterization with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        cex = 2)
 ```
@@ -527,7 +527,7 @@ df %>%
 stimuli_sample_all_langs_and_random %>% 
   hclust() %>% 
   as.phylo()  %>% 
-  plot(main = "Clusterization with a random equivalent (only common stimuli)",
+  plot(main = "clusterization with random equivalents and common stimuli)",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        cex = 2)
 ```
