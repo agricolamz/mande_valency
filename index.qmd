@@ -48,7 +48,6 @@ colors <- tibble(language = c("Guro", "Dan Gweetaa", "Dan_Gweetaa", "Mano",
        color = c("gold1", "gold3", "gold3","gold3", "cyan3", "cyan3", "cyan1"))
 ```
 
-
 ::: {.panel-tabset}
 
 ## Конструкции главное
@@ -129,7 +128,7 @@ dist_gold_standard %>%
   plot(main = "Clusterization for all stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2,
+       cex = 1.5,
        font = 2)
 ```
 
@@ -269,7 +268,7 @@ all_stimuli %>%
   plot(main = "Все примеры, без фильтрации",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2,
+       cex = 1.5,
        font = 2)
 ```
 
@@ -313,7 +312,7 @@ sample_first_construction %>%
   plot(main = "Выборка с первыми строками для каждого языка",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2,
+       cex = 1.5,
        font = 2)
 ```
 
@@ -358,7 +357,7 @@ sample_random_construction %>%
   plot(main = "Clusterization with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2, 
+       cex = 1.5, 
        font = 2)
 ```
 
@@ -401,7 +400,7 @@ sample_random_construction %>%
   plot(main = "Clusterization with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2, 
+       cex = 1.5, 
        font = 2)
 ```
 
@@ -439,7 +438,7 @@ sample_popular_construction %>%
   plot(main = "Выборка с популярынми конструкциями",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2, 
+       cex = 1.5, 
        font = 2)
 ```
 
@@ -499,7 +498,7 @@ stimuli_sample_all_langs %>%
   plot(main = "Clusterization with common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2, 
+       cex = 1.5, 
        font = 2)
 ```
 
@@ -588,7 +587,7 @@ stimuli_sample_all_langs_and_random %>%
   plot(main = "clusterization with random equivalents and common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
-       cex = 2, 
+       cex = 1.5, 
        font = 2)
 ```
 
