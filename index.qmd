@@ -299,8 +299,9 @@ df %>%
   group_by(number, language) %>% 
   slice(1)  %>% 
   ungroup() %>% 
-  mutate(construction_type = 1) %>% 
-  pivot_wider(names_from = language, values_from = construction_type, values_fill = 0) %>% 
+  select(number, language, construction_type) %>% 
+  mutate(construction_type2 = 1) %>% 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
   select(Dan_Gweetaa:Mano)  %>% 
   t() %>% 
   dist(method = "binary")  ->
@@ -329,7 +330,7 @@ title(main = "Выборка с первыми строками для кажд�
 
 > МХ: А что будет, если выбрать случайный эквивалент, а не первую строку?
 
-Вот что будет, если взять случайный эквивалент для каждого языка:
+Вот что будет, если взять случайный эквивалент для каждого языка `set.seed(42)` (такие же 3, 5, 7, 12, 13, 15; похож на 4, 8, 11):
 
 ::: {.panel-tabset}
 
@@ -343,8 +344,9 @@ df %>%
   group_by(number, language) %>% 
   slice_sample(n = 1) %>% 
   ungroup() %>% 
-  mutate(construction_type = 1) %>% 
-  pivot_wider(names_from = language, values_from = construction_type, values_fill = 0) %>% 
+  select(number, language, construction_type) %>% 
+  mutate(construction_type2 = 1) %>% 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
   select(Dan_Gweetaa:Mano)  %>% 
   t() %>% 
   dist(method = "binary")  ->
@@ -363,6 +365,49 @@ sample_random_construction %>%
 ### neighbornet
 
 ```{r sample-random-construction-nn}
+sample_random_construction %>% 
+  neighborNet() %>% 
+  plot()
+title(main = "Выборка со случайным эквивалентом для каждого языка")
+```
+
+:::
+
+Вот что будет, если взять случайный эквивалент для каждого языка `set.seed(57)` (такие же 1, 2, 6, 9, 10, 14):
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r sample-random-construction2}
+set.seed(57)
+df %>% 
+  filter(!str_detect(construction, "no equivalent"),
+         !is.na(construction_type)) %>%
+  group_by(number, language) %>% 
+  slice_sample(n = 1) %>% 
+  ungroup() %>% 
+  select(number, language, construction_type) %>% 
+  mutate(construction_type2 = 1) %>% 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
+  select(Dan_Gweetaa:Mano)  %>% 
+  t() %>% 
+  dist(method = "binary")  ->
+  sample_random_construction
+
+sample_random_construction %>% 
+  hclust() %>% 
+  as.phylo() %>% 
+  plot(main = "Clusterization with random equivalents",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 2, 
+       font = 2)
+```
+
+### neighbornet
+
+```{r sample-random-construction-nn2}
 sample_random_construction %>% 
   neighborNet() %>% 
   plot()
@@ -529,8 +574,9 @@ df %>%
   group_by(number, language) %>% 
   slice_sample(n = 1) %>% 
   ungroup() %>% 
-  mutate(construction_type = 1) %>% 
-  pivot_wider(names_from = language, values_from = construction_type, values_fill = 0) %>% 
+  select(number, language, construction_type) %>% 
+  mutate(construction_type2 = 1) %>% 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
   select(Dan_Gweetaa:Mano)  %>% 
   t() %>% 
   dist(method = "binary") ->
@@ -539,7 +585,7 @@ df %>%
 stimuli_sample_all_langs_and_random %>% 
   hclust() %>% 
   as.phylo()  %>% 
-  plot(main = "clusterization with random equivalents and common stimuli)",
+  plot(main = "clusterization with random equivalents and common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 2, 
