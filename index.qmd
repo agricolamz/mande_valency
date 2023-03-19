@@ -98,7 +98,7 @@ df_pairwise_total %>%
   geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
   scale_fill_gradient(low = "lightblue", high = "navy")+
   coord_fixed()+
-  labs(x = "", y = "", title = "Heatmap for all stimuli") +
+  labs(x = "", y = "", title = "Heatmap with all stimuli") +
   theme(legend.position = "bottom")
 ```
 
@@ -125,7 +125,7 @@ library("ape")
 dist_gold_standard %>%   
   hclust() %>% 
   as.phylo() %>% 
-  plot(main = "Clusterization for all stimuli",
+  plot(main = "Clusterization with all stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5,
@@ -485,7 +485,7 @@ df %>%
 
 ```{r stimuli-sample-all-langs}
 df_wide %>% 
-  filter(number %in% to_keep) %>%  
+  filter(number %in% to_keep) %>% View()
   mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)}))  %>% 
   select(Guro:Kpelle) %>% 
   t() %>% 
