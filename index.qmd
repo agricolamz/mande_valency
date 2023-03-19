@@ -43,9 +43,9 @@ df %>%
   pull(number) ->
   to_keep
 
-colors <- tibble(language = c("Guro", "Dan Gweetaa", "Mano", 
-                    "Kpelle", "Kono", "Looma", "Dan_Gweetaa"),
-       color = c(rep(c("#EEAD0E", "cyan3"), each = 3), "#EEAD0E"))
+colors <- tibble(language = c("Guro", "Dan Gweetaa", "Dan_Gweetaa", "Mano", 
+                    "Kpelle", "Kono", "Looma"),
+       color = c("gold1", "gold3", "gold3","gold3", "cyan3", "cyan3", "cyan1"))
 ```
 
 
@@ -128,7 +128,9 @@ dist_gold_standard %>%
   as.phylo() %>% 
   plot(main = "Clusterization for all stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
-       cex = 2)
+       direction = "downwards",
+       cex = 2,
+       font = 2)
 ```
 
 ### neighbornet
@@ -266,7 +268,9 @@ all_stimuli %>%
   as.phylo() %>% 
   plot(main = "Все примеры, без фильтрации",
        tip.color = colors$color[match(.$tip.label, colors$language)],
-       cex = 2)
+       direction = "downwards",
+       cex = 2,
+       font = 2)
 ```
 
 ### neighbornet
@@ -307,7 +311,9 @@ sample_first_construction %>%
   as.phylo() %>% 
   plot(main = "Выборка с первыми строками для каждого языка",
        tip.color = colors$color[match(.$tip.label, colors$language)],
-       cex = 2)
+       direction = "downwards",
+       cex = 2,
+       font = 2)
 ```
 
 ### neighbornet
@@ -335,7 +341,7 @@ df %>%
   filter(!str_detect(construction, "no equivalent"),
          !is.na(construction_type)) %>%
   group_by(number, language) %>% 
-  sample_n(1) %>% 
+  slice_sample(n = 1) %>% 
   ungroup() %>% 
   mutate(construction_type = 1) %>% 
   pivot_wider(names_from = language, values_from = construction_type, values_fill = 0) %>% 
@@ -349,7 +355,9 @@ sample_random_construction %>%
   as.phylo() %>% 
   plot(main = "Clusterization with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
-       cex = 2)
+       direction = "downwards",
+       cex = 2, 
+       font = 2)
 ```
 
 ### neighbornet
@@ -385,7 +393,9 @@ sample_popular_construction %>%
   as.phylo() %>% 
   plot(main = "Выборка с популярынми конструкциями",
        tip.color = colors$color[match(.$tip.label, colors$language)],
-       cex = 2)
+       direction = "downwards",
+       cex = 2, 
+       font = 2)
 ```
 
 ### neighbornet
@@ -443,7 +453,9 @@ stimuli_sample_all_langs %>%
   as.phylo() %>% 
   plot(main = "Clusterization with common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
-       cex = 2)
+       direction = "downwards",
+       cex = 2, 
+       font = 2)
 ```
 
 ### neighbornet
@@ -515,7 +527,7 @@ df %>%
          !is.na(construction_type),
          number %in% to_keep) %>%
   group_by(number, language) %>% 
-  sample_n(1) %>% 
+  slice_sample(n = 1) %>% 
   ungroup() %>% 
   mutate(construction_type = 1) %>% 
   pivot_wider(names_from = language, values_from = construction_type, values_fill = 0) %>% 
@@ -529,7 +541,9 @@ stimuli_sample_all_langs_and_random %>%
   as.phylo()  %>% 
   plot(main = "clusterization with random equivalents and common stimuli)",
        tip.color = colors$color[match(.$tip.label, colors$language)],
-       cex = 2)
+       direction = "downwards",
+       cex = 2, 
+       font = 2)
 ```
 
 ### neighbornet
