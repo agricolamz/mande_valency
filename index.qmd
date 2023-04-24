@@ -19,33 +19,33 @@ library(tidyverse)
 library(widyr)
 library(phangorn)
 theme_set(theme_bw()+theme(text = element_text(size = 16)))
-readxl::read_xlsx("../GM_merged_wide.xlsx") %>% 
-  filter(!(number %in% c(112, 128, 122, 125, 114))) %>% 
-  rename(construction_type = extended_construction) ->
+readxl::read_xlsx("../GM_merged_wide.xlsx") |> 
+  filter(!(number %in% c(112, 128, 122, 125, 114))) ->
   df_wide
-read_csv("../GM_merged.csv") %>% 
+read_csv("../GM_merged.csv") |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(extended_construction),
-         !(number %in% c(112, 128, 122, 125, 114))) %>% 
-  rename(construction_type = extended_construction) ->
+         !is.na(construction_type),
+         !(number %in% c(112, 128, 122, 125, 114))) ->
   df
-readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") %>% 
-  select(Number, `English predicate`, `Stimulus sentence (SAY)`, `Semantic types`) %>% 
+
+readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") |> 
+  select(Number, `English predicate`, `Stimulus sentence (SAY)`, `Semantic types`) |> 
   rename(number = Number,
          predicate_eng = `English predicate`,
          stimuli = `Stimulus sentence (SAY)`,
          semantic_type = `Semantic types`) ->
   stimuli
-df %>% 
-  count(number, language) %>% 
-  count(number) %>%
-  filter(n == 6) %>% 
+
+df |> 
+  count(number, language) |>
+  count(number) |> 
+  filter(n == 7) |> 
   pull(number) ->
   to_keep
 
 colors <- tibble(language = c("Guro", "Dan Gweetaa", "Dan_Gweetaa", "Mano", 
-                    "Kpelle", "Kono", "Looma"),
-       color = c("gold1", "gold3", "gold3","gold3", "cyan3", "cyan3", "cyan1"))
+                    "Kpelle", "Kono", "Looma", "Bamana"),
+       color = c("gold1", "gold3", "gold3","gold3", "cyan3", "cyan3", "cyan1", "tomato"))
 ```
 
 ::: {.panel-tabset}
@@ -59,40 +59,40 @@ colors <- tibble(language = c("Guro", "Dan Gweetaa", "Dan_Gweetaa", "Mano",
 ### heatmap
 
 ```{r heatmap-golden-stadard}
-df %>% 
+df |> 
   filter(number %in% to_keep,
          !str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>% 
-  arrange(language)  %>% 
-  distinct(language, number, construction_type)  %>% 
-  pairwise_count(language, number) %>% 
+         !is.na(construction_type)) |> 
+  arrange(language)  |> 
+  distinct(language, number, construction_type)  |> 
+  pairwise_count(language, number) |> 
   rename(total = n) ->
   df_pairwise_total
 
-df %>% 
+df |> 
   filter(number %in% to_keep,
          !str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>% 
-  group_by(number) %>% 
-  arrange(language) %>% 
-  pairwise_count(language, construction_type)  %>% 
-  mutate(n = 1) %>% 
-  group_by(item1, item2) %>% 
-  summarise(n = sum(n)) -> 
+         !is.na(construction_type)) |> 
+  group_by(number) |> 
+  arrange(language) |> 
+  pairwise_count(language, construction_type)  |> 
+  mutate(n = 1) |> 
+  group_by(item1, item2) |> 
+  reframe(n = sum(n)) -> 
   df_pairwise_within_construction
 
-df_pairwise_total %>% 
-  left_join(df_pairwise_within_construction) %>%  
+df_pairwise_total |> 
+  left_join(df_pairwise_within_construction) |>  
   mutate(percentage = round(n/total*100, 2),
          item1 = case_match(item1, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
                             .default = item1),
          item2 = case_match(item2, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
-                            .default = item2)) %>% 
-  select(item1, item2, percentage) %>% 
-  mutate(item1 = factor(item1, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma")),
-         item2 = factor(item2, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma"))) %>% 
+                            .default = item2)) |> 
+  select(item1, item2, percentage) |> 
+  mutate(item1 = factor(item1, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma", "Bamana")),
+         item2 = factor(item2, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma", "Bamana"))) |> 
   ggplot(aes(item1, item2))+
   geom_tile(aes(fill = percentage), colour = "white") +
   geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
@@ -105,25 +105,25 @@ df_pairwise_total %>%
 ### hclust
 
 ```{r hclust-golden-stadard}
-df_pairwise_total %>% 
-  left_join(df_pairwise_within_construction) %>%  
+df_pairwise_total |> 
+  left_join(df_pairwise_within_construction) |>  
   mutate(percentage = 100-round(n/total*100, 2),
          item1 = case_match(item1, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
                             .default = item1),
          item2 = case_match(item2, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
-                            .default = item2)) %>% 
-  select(item1, item2, percentage) %>% 
-  pivot_wider(names_from = item2, values_from = percentage) %>% 
-  arrange(item1) %>% 
-  select(-item1) %>% 
+                            .default = item2)) |> 
+  select(item1, item2, percentage) |> 
+  pivot_wider(names_from = item2, values_from = percentage) |> 
+  arrange(item1) |> 
+  select(-item1) |> 
   as.dist() ->
   dist_gold_standard
 
 library("ape")
-dist_gold_standard %>%   
-  hclust() %>% 
+dist_gold_standard |>   
+  hclust() |> 
   as.phylo() %>% 
   plot(main = "Clusterization with all stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
@@ -135,8 +135,8 @@ dist_gold_standard %>%
 ### neighbornet
 
 ```{r nn-golden-stadard}
-dist_gold_standard %>% 
-  neighborNet() %>% 
+dist_gold_standard |> 
+  neighborNet() |> 
   plot()
 title(main = "Heatmap for all stimuli")
 ```
@@ -153,23 +153,14 @@ title(main = "Heatmap for all stimuli")
 - `postposition`
 - `language`
 
-Есть случаи, когда конструкция (`cunstruction`) есть, а расшириной конструкции (`exteded_cunstruction`) нет:
-
-```{r}
-df %>% 
-  filter(!str_detect(construction, "no equivalent"),
-         is.na(construction_type))
-```
-
 Видимо, все эти примеры надо поправить. Сколько у нас наблюдений по каждому языку?
 
 ```{r}
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>% 
+         !is.na(construction_type)) |> 
   count(language)
 ```
-
 
 А пока давайте посмотрим на общую таблицу:
 
@@ -180,65 +171,65 @@ df_wide <- readxl::read_xlsx("../GM_merged_wide.xlsx")
 Можно посчитать, сколько раз пары языков заполняют один и тот же стимул:
 
 ```{r}
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>% 
-  arrange(language) %>% 
-  distinct(language, number) %>% 
-  pairwise_count(language, number) %>% 
+         !is.na(construction_type)) |> 
+  arrange(language) |> 
+  distinct(language, number) |> 
+  pairwise_count(language, number) |> 
   rename(total = n) ->
   df_pairwise_total
 
-df_pairwise_total %>% 
-  pivot_wider(names_from = item2, values_from = total) %>% 
+df_pairwise_total |> 
+  pivot_wider(names_from = item2, values_from = total) |> 
   arrange(item1)
 ```
 
 Можно посчитать, сколько раз пары языков заполняют одну и ту же конструкцию (т. е. совпадают в конструкции, в одном и том же стимуле):
 
 ```{r}
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>% 
-  group_by(number) %>% 
-  arrange(language) %>% 
-  pairwise_count(language, construction_type) %>% 
-  mutate(n = 1) %>% # to unify
-  group_by(item1, item2) %>% 
-  summarise(n = sum(n)) ->
+         !is.na(construction_type)) |> 
+  group_by(number) |> 
+  arrange(language) |> 
+  pairwise_count(language, construction_type) |> 
+  mutate(n = 1) |> # to unify
+  group_by(item1, item2) |> 
+  reframe(n = sum(n)) ->
   df_pairwise_within_construction
 
-df_pairwise_within_construction %>%
-  pivot_wider(names_from = item2, values_from = n) %>% 
-  arrange(item1) %>% 
-  select(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano) 
+df_pairwise_within_construction |>
+  pivot_wider(names_from = item2, values_from = n) |> 
+  arrange(item1) |> 
+  select(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano, Bamana) 
 ```
 
 Мне кажется, что чтобы посчитать процент совпадений, о котором просила Маша, нужно разделить последнюю таблицу на предпоследнюю:
 
 ```{r}
-df_pairwise_total %>% 
-  left_join(df_pairwise_within_construction) %>% 
-  mutate(percentage = round(n/total*100, 3)) %>% 
-  select(item1, item2, percentage) %>% 
-  pivot_wider(names_from = item2, values_from = percentage) %>% 
-  arrange(item1) %>% 
-  select(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano)
+df_pairwise_total |> 
+  left_join(df_pairwise_within_construction) |> 
+  mutate(percentage = round(n/total*100, 3)) |> 
+  select(item1, item2, percentage) |> 
+  pivot_wider(names_from = item2, values_from = percentage) |> 
+  arrange(item1) |> 
+  select(item1, Dan_Gweetaa, Guro, Kono, Kpelle, Looma, Mano, Bamana)
 ```
 
 Можно построить тепловую карту:
 
 ```{r heatmap}
-df_pairwise_total %>% 
-  left_join(df_pairwise_within_construction) %>% 
+df_pairwise_total |> 
+  left_join(df_pairwise_within_construction) |> 
   mutate(percentage = round(n/total*100, 2),
          item1 = case_match(item1, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
                             .default = item1),
          item2 = case_match(item2, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
-                            .default = item2)) %>% 
-  select(item1, item2, percentage) %>% 
+                            .default = item2)) |> 
+  select(item1, item2, percentage) |> 
   ggplot(aes(item1, item2))+
   geom_tile(aes(fill = percentage), colour = "white") +
   geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
@@ -255,16 +246,16 @@ df_pairwise_total %>%
 ### hclust
 
 ```{r all-stimuli}
-df_wide %>% 
-  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)})) %>% 
-  select(Guro:Kpelle) %>% 
-  t() %>% 
+df_wide |>
+  mutate(across(Guro:Bamana, function(x){ifelse(is.na(x), 0, 1)})) |> 
+  select(Guro:Bamana) |> 
+  t() |> 
   dist(method = "binary")  ->
   all_stimuli
 
-all_stimuli %>% 
-  hclust() %>% 
-  as.phylo() %>% 
+all_stimuli |> 
+  hclust() |> 
+  as.phylo() %>%
   plot(main = "Все примеры, без фильтрации",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
@@ -275,8 +266,8 @@ all_stimuli %>%
 ### neighbornet
 
 ```{r all-stimuli-nn}
-all_stimuli %>% 
-  neighborNet() %>% 
+all_stimuli |> 
+  neighborNet() |> 
   plot()
 title(main = "Все примеры, без фильтрации")
 ```
@@ -292,23 +283,23 @@ title(main = "Все примеры, без фильтрации")
 ### hclust
 
 ```{r sample-first-construction}
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>%
-  group_by(number, language) %>% 
-  slice(1)  %>% 
-  ungroup() %>% 
-  select(number, language, construction_type) %>% 
-  mutate(construction_type2 = 1) %>% 
-  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
-  select(Dan_Gweetaa:Mano)  %>% 
-  t() %>% 
+         !is.na(construction_type)) |>
+  group_by(number, language) |> 
+  slice(1)  |> 
+  ungroup() |> 
+  select(number, language, construction_type) |> 
+  mutate(construction_type2 = 1) |> 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) |> 
+  select(Bamana:Mano)  |> 
+  t() |> 
   dist(method = "binary")  ->
   sample_first_construction
 
-sample_first_construction %>% 
-  hclust() %>% 
-  as.phylo() %>% 
+sample_first_construction |> 
+  hclust() |> 
+  as.phylo() %>%
   plot(main = "Выборка с первыми строками для каждого языка",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
@@ -319,8 +310,8 @@ sample_first_construction %>%
 ### neighbornet
 
 ```{r sample-first-construction-nn}
-sample_first_construction %>% 
-  neighborNet() %>% 
+sample_first_construction |> 
+  neighborNet() |> 
   plot()
 title(main = "Выборка с первыми строками для каждого языка")
 ```
@@ -337,23 +328,23 @@ title(main = "Выборка с первыми строками для кажд�
 
 ```{r sample-random-construction}
 set.seed(42)
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>%
-  group_by(number, language) %>% 
-  slice_sample(n = 1) %>% 
-  ungroup() %>% 
-  select(number, language, construction_type) %>% 
-  mutate(construction_type2 = 1) %>% 
-  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
-  select(Dan_Gweetaa:Mano)  %>% 
-  t() %>% 
+         !is.na(construction_type)) |>
+  group_by(number, language) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(number, language, construction_type) |> 
+  mutate(construction_type2 = 1) |> 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) |> 
+  select(Bamana:Mano)  |> 
+  t() |> 
   dist(method = "binary")  ->
   sample_random_construction
 
-sample_random_construction %>% 
-  hclust() %>% 
-  as.phylo() %>% 
+sample_random_construction |> 
+  hclust() |> 
+  as.phylo() %>%
   plot(main = "Clusterization with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
@@ -364,8 +355,8 @@ sample_random_construction %>%
 ### neighbornet
 
 ```{r sample-random-construction-nn}
-sample_random_construction %>% 
-  neighborNet() %>% 
+sample_random_construction |> 
+  neighborNet() |> 
   plot()
 title(main = "Выборка со случайным эквивалентом для каждого языка")
 ```
@@ -380,23 +371,23 @@ title(main = "Выборка со случайным эквивалентом д
 
 ```{r sample-random-construction2}
 set.seed(57)
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>%
-  group_by(number, language) %>% 
-  slice_sample(n = 1) %>% 
-  ungroup() %>% 
-  select(number, language, construction_type) %>% 
-  mutate(construction_type2 = 1) %>% 
-  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
-  select(Dan_Gweetaa:Mano)  %>% 
-  t() %>% 
+         !is.na(construction_type)) |>
+  group_by(number, language) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(number, language, construction_type) |> 
+  mutate(construction_type2 = 1) |> 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) |> 
+  select(Bamana:Mano)  |> 
+  t() |> 
   dist(method = "binary")  ->
   sample_random_construction
 
-sample_random_construction %>% 
-  hclust() %>% 
-  as.phylo() %>% 
+sample_random_construction |> 
+  hclust() |> 
+  as.phylo() %>%
   plot(main = "Clusterization with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
@@ -407,8 +398,8 @@ sample_random_construction %>%
 ### neighbornet
 
 ```{r sample-random-construction-nn2}
-sample_random_construction %>% 
-  neighborNet() %>% 
+sample_random_construction |> 
+  neighborNet() |> 
   plot()
 title(main = "Выборка со случайным эквивалентом для каждого языка")
 ```
@@ -422,19 +413,19 @@ title(main = "Выборка со случайным эквивалентом д
 ### hclust
 
 ```{r sample-popular-construction}
-df_wide %>% 
-  group_by(number) %>% 
-  filter(n == max(n))  %>% 
-  ungroup() %>% 
-  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)})) %>% 
-  select(Guro:Kpelle) %>% 
-  t() %>% 
+df_wide |> 
+  group_by(number) |> 
+  filter(n == max(n))  |> 
+  ungroup() |> 
+  mutate(across(Guro:Bamana, function(x){ifelse(is.na(x), 0, 1)})) |> 
+  select(Guro:Bamana) |> 
+  t() |> 
   dist(method = "binary")  ->
   sample_popular_construction
 
-sample_popular_construction %>% 
-  hclust() %>% 
-  as.phylo() %>% 
+sample_popular_construction |> 
+  hclust() |> 
+  as.phylo() %>%
   plot(main = "Выборка с популярынми конструкциями",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
@@ -445,8 +436,8 @@ sample_popular_construction %>%
 ### neighbornet
 
 ```{r sample-popular-construction-nn}
-sample_popular_construction  %>% 
-  neighborNet() %>% 
+sample_popular_construction  |> 
+  neighborNet() |> 
   plot()
 title(main = "Выборка с популярынми конструкциями")
 ```
@@ -458,10 +449,10 @@ title(main = "Выборка с популярынми конструкциям�
 Вот список стимулов, для которых есть все шесть языков:
 
 ```{r}
-df %>% 
-  count(number, language) %>% 
-  count(number) %>%
-  filter(n == 6) %>% 
+df |> 
+  count(number, language) |> 
+  count(number) |>
+  filter(n == 7) |> 
   pull(number) ->
   to_keep
 to_keep
@@ -470,10 +461,10 @@ to_keep
 Или наоборот, вот номера, для которых не во всех языках есть данные:
 
 ```{r}
-df %>% 
-  count(number, language) %>% 
-  count(number) %>% 
-  filter(n < 6) %>% 
+df |> 
+  count(number, language) |> 
+  count(number) |> 
+  filter(n < 7) |> 
   pull(number)
 ```
 
@@ -484,17 +475,18 @@ df %>%
 ### hclust
 
 ```{r stimuli-sample-all-langs}
-df_wide %>% 
-  filter(number %in% to_keep) %>% View()
-  mutate(across(Guro:Kpelle, function(x){ifelse(is.na(x), 0, 1)}))  %>% 
-  select(Guro:Kpelle) %>% 
-  t() %>% 
+df_wide |> 
+  filter(number %in% to_keep) |> 
+  mutate(across(Guro:Bamana, function(x){ifelse(is.na(x), 0, 1)}))  |> 
+  select(Guro:Bamana) |> 
+  slice(1:13) |> 
+  t() |> 
   dist(method = "binary") ->
   stimuli_sample_all_langs
 
-stimuli_sample_all_langs %>% 
-  hclust() %>% 
-  as.phylo() %>% 
+stimuli_sample_all_langs |> 
+  hclust() |> 
+  as.phylo() %>%
   plot(main = "Clusterization with common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
@@ -505,8 +497,8 @@ stimuli_sample_all_langs %>%
 ### neighbornet
 
 ```{r stimuli-sample-all-langs-nn}
-stimuli_sample_all_langs  %>% 
-  neighborNet() %>% 
+stimuli_sample_all_langs  |> 
+  neighborNet() |> 
   plot()
 title(main = "Выборка стимулов со всеми 6 языками")
 ```
@@ -514,38 +506,38 @@ title(main = "Выборка стимулов со всеми 6 языками")
 ### heatmap
 
 ```{r stimuli-sample-all-langs-heatmap}
-df %>% 
+df |> 
   filter(number %in% to_keep,
          !str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>% 
-  arrange(language)  %>% 
-  distinct(language, number, construction_type)  %>% 
-  pairwise_count(language, number) %>% 
+         !is.na(construction_type)) |> 
+  arrange(language)  |> 
+  distinct(language, number, construction_type)  |> 
+  pairwise_count(language, number) |> 
   rename(total = n) ->
   df_pairwise_total
 
-df %>% 
+df |> 
   filter(number %in% to_keep,
          !str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>% 
-  group_by(number) %>% 
-  arrange(language) %>% 
-  pairwise_count(language, construction_type)  %>% 
-  mutate(n = 1) %>% 
-  group_by(item1, item2) %>% 
-  summarise(n = sum(n)) -> 
+         !is.na(construction_type)) |> 
+  group_by(number) |> 
+  arrange(language) |> 
+  pairwise_count(language, construction_type)  |> 
+  mutate(n = 1) |> 
+  group_by(item1, item2) |> 
+  reframe(n = sum(n)) -> 
   df_pairwise_within_construction
 
-df_pairwise_total %>% 
-  left_join(df_pairwise_within_construction) %>%  
+df_pairwise_total |> 
+  left_join(df_pairwise_within_construction) |>  
   mutate(percentage = round(n/total*100, 2),
          item1 = case_match(item1, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
                             .default = item1),
          item2 = case_match(item2, 
                             "Dan_Gweetaa" ~ "Dan Gweetaa",
-                            .default = item2)) %>% 
-  select(item1, item2, percentage) %>% 
+                            .default = item2)) |> 
+  select(item1, item2, percentage) |> 
   ggplot(aes(item1, item2))+
   geom_tile(aes(fill = percentage), colour = "white") +
   geom_text(aes(label = str_c(percentage, "%")), colour = "white") +
@@ -566,24 +558,24 @@ df_pairwise_total %>%
 ### hclust
 
 ```{r stimuli-sample-all-langs-and-random}
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
          !is.na(construction_type),
-         number %in% to_keep) %>%
-  group_by(number, language) %>% 
-  slice_sample(n = 1) %>% 
-  ungroup() %>% 
-  select(number, language, construction_type) %>% 
-  mutate(construction_type2 = 1) %>% 
-  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) %>% 
-  select(Dan_Gweetaa:Mano)  %>% 
-  t() %>% 
+         number %in% to_keep) |>
+  group_by(number, language) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(number, language, construction_type) |> 
+  mutate(construction_type2 = 1) |> 
+  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) |> 
+  select(Bamana:Mano)  |> 
+  t() |> 
   dist(method = "binary") ->
   stimuli_sample_all_langs_and_random
 
-stimuli_sample_all_langs_and_random %>% 
-  hclust() %>% 
-  as.phylo()  %>% 
+stimuli_sample_all_langs_and_random |> 
+  hclust() |> 
+  as.phylo()  %>%
   plot(main = "clusterization with random equivalents and common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
@@ -594,8 +586,8 @@ stimuli_sample_all_langs_and_random %>%
 ### neighbornet
 
 ```{r stimuli-sample-all-langs-and-random-nn}
-stimuli_sample_all_langs_and_random  %>% 
-  neighborNet() %>% 
+stimuli_sample_all_langs_and_random  |> 
+  neighborNet() |> 
   plot()
 title(main = "Выборка стимулов со всеми 6 языками  (случайный эквивалент)")
 ```
@@ -608,13 +600,13 @@ title(main = "Выборка стимулов со всеми 6 языками  
 Перед тем, как приступить к перекодированию, которое предложила Маша К., посмотрим статистику конструкций по языкам:
 
 ```{r}
-df %>% 
-  count(language, construction_type) %>%
-  group_by(construction_type) %>% 
-  mutate(overall = sum(n)) %>%  
-  pivot_wider(names_from = language, values_from = n, values_fill = 0) %>% 
-  arrange(desc(overall)) %>% 
-  select(construction_type, overall, Guro, Dan_Gweetaa, Mano, Kpelle, Kono, Looma)
+df |> 
+  count(language, construction_type) |>
+  group_by(construction_type) |> 
+  mutate(overall = sum(n)) |>  
+  pivot_wider(names_from = language, values_from = n, values_fill = 0) |> 
+  arrange(desc(overall)) |> 
+  select(construction_type, overall, Guro, Dan_Gweetaa, Mano, Kpelle, Kono, Looma, Bamana)
 ```
 
 Маша предложила классификацию, которую я попробую воспроизвести.
@@ -628,37 +620,37 @@ df %>%
 >По идее это не исчерпывающий список, останется что-то на периферии вроде X+Y Aux V X+Ypron recp Ad, но это редкие штуки. 
 
 ```{r}
-df %>% 
-  count(language, construction_type) %>%
+df |> 
+  count(language, construction_type) |>
   mutate(type = case_when(construction_type == "X Aux Y V" ~ "transitive",
                           str_detect(construction_type, "Aux") &
                             !str_detect(construction_type, "N") ~ "intransitive",
                           str_detect(construction_type, "be") ~ "copula",
                           str_detect(construction_type, "Aux") &
                             str_detect(construction_type, "N") ~ "complex verb",
-                          TRUE ~ "other")) %>% 
-  group_by(construction_type) %>% 
-  mutate(overall = sum(n)) %>%  
-  pivot_wider(names_from = language, values_from = n, values_fill = 0) %>% 
-  arrange(desc(overall)) %>% 
-  select(construction_type, type, 	overall, Guro, Dan_Gweetaa, Mano, Kpelle, Kono, Looma)
+                          TRUE ~ "other")) |> 
+  group_by(construction_type) |> 
+  mutate(overall = sum(n)) |>  
+  pivot_wider(names_from = language, values_from = n, values_fill = 0) |> 
+  arrange(desc(overall)) |> 
+  select(construction_type, type, 	overall, Guro, Dan_Gweetaa, Mano, Kpelle, Kono, Looma, Bamana)
 ```
 
 Вот, что получилось. Маш, что исправить? Вот саммари:
 
 ```{r}
-df %>% 
+df |> 
   mutate(type = case_when(construction_type == "X Aux Y V" ~ "transitive",
                           str_detect(construction_type, "Aux") &
                             !str_detect(construction_type, "N") ~ "intransitive",
                           str_detect(construction_type, "be") ~ "copula",
                           str_detect(construction_type, "Aux") &
                             str_detect(construction_type, "N") ~ "complex verb",
-                          TRUE ~ "other")) %>% 
-  count(type, language) %>% 
-  pivot_wider(names_from = language, values_from = n, values_fill = 0)  %>% 
-  arrange(-Looma) %>% 
-  select(type, Guro, Dan_Gweetaa, Mano, Kpelle, Kono, Looma)
+                          TRUE ~ "other")) |> 
+  count(type, language) |> 
+  pivot_wider(names_from = language, values_from = n, values_fill = 0)  |> 
+  arrange(-Looma) |> 
+  select(type, Guro, Dan_Gweetaa, Mano, Kpelle, Kono, Looma, Bamana)
 ```
 
 > Во-вторых, есть отдельная просьба про распределение конструкций и глаголов. В первом листе stimuli_general в столбце B есть семантическая разметка глаголов. Добавь её, пожалуйста, в глагольную таблицу, которую ты будешь снова генерировать. 
@@ -666,18 +658,18 @@ df %>%
 Грубо говоря я хочу проверить, верно ли, что у глаголов вида effect будет больше переходных конструкций, а у feeling больше сложных глаголов, т.к. более абстрактные значения языки склонны выражать метафорически.
 
 ```{r}
-df %>% 
-  left_join(stimuli) %>% 
+df |> 
+  left_join(stimuli) |> 
     mutate(type = case_when(construction_type == "X Aux Y V" ~ "transitive",
                           str_detect(construction_type, "Aux") &
                             !str_detect(construction_type, "N") ~ "intransitive",
                           str_detect(construction_type, "be") ~ "copula",
                           str_detect(construction_type, "Aux") &
                             str_detect(construction_type, "N") ~ "complex verb",
-                          TRUE ~ "other")) %>% 
-  count(type, language, semantic_type) %>% 
+                          TRUE ~ "other")) |> 
+  count(type, language, semantic_type) |> 
   mutate(language = str_replace(language, "_", " "),
-         language = factor(language, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma"))) %>% 
+         language = factor(language, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma", "Bamana"))) |> 
   ggplot(aes(n, type))+
   geom_col()+
   facet_grid(semantic_type~language, scales = "free")
@@ -691,10 +683,10 @@ df %>%
 Какие адлоги есть для каждого языка?
 
 ```{r}
-df %>%
-  mutate(adposition = str_split(adposition, ", ")) %>% 
-  unnest_longer(adposition) %>% 
-  count(language, adposition) %>% 
+df |>
+  mutate(adposition = str_split(adposition, ", ")) |> 
+  unnest_longer(adposition) |> 
+  count(language, adposition) |> 
   na.omit()
 ```
 
@@ -714,33 +706,33 @@ df %>%
 Я не совсем понял, что написала МХ, так что я пока посчитал вот такое вот. Какие адлоги из разных языков встречаются друг с другом в одной расширеной конструкции внутри одного стимула?
 
 ```{r}
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
          !is.na(construction_type),
-         !is.na(adposition)) %>%  
-  group_by(number) %>% 
-  mutate(adposition = str_c(language, "__", adposition)) %>% 
-  pairwise_count(adposition, construction_type)  %>%
-  group_by(item1, item2) %>% 
-  summarise(n = sum(n)) %>% 
+         !is.na(adposition)) |>  
+  group_by(number) |> 
+  mutate(adposition = str_c(language, "__", adposition)) |> 
+  pairwise_count(adposition, construction_type)  |>
+  group_by(item1, item2) |> 
+  reframe(n = sum(n)) |> 
   arrange(desc(n))
 ```
 
 Я попробовал сделать таблицу, но она получается огромная... Возьмем только примеры, где больше одного:
 
 ```{r}
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
          !is.na(construction_type),
-         !is.na(adposition)) %>%  
-  group_by(number) %>% 
-  mutate(adposition = str_c(language, "__", adposition)) %>% 
-  pairwise_count(adposition, construction_type) %>% 
-  group_by(item1, item2) %>% 
-  summarise(n = sum(n)) %>% 
-  filter(n > 1) %>% 
+         !is.na(adposition)) |>  
+  group_by(number) |> 
+  mutate(adposition = str_c(language, "__", adposition)) |> 
+  pairwise_count(adposition, construction_type) |> 
+  group_by(item1, item2) |> 
+  reframe(n = sum(n)) |> 
+  filter(n > 1) |> 
   mutate(item1 = fct_reorder(item1, n, .desc = TRUE),
-         item2 = fct_reorder(item2, n, .desc = TRUE)) %>% 
+         item2 = fct_reorder(item2, n, .desc = TRUE)) |> 
   ggplot(aes(item1, item2))+
   geom_tile(aes(fill = n), colour = "white") +
   geom_text(aes(label = n), colour = "white") +
@@ -755,27 +747,27 @@ df %>%
 
 ```{r}
 #| fig-height: 15
-df %>% 
+df |> 
   filter(!str_detect(construction, "no equivalent"),
          !is.na(construction_type),
-         !is.na(adposition)) %>%  
-  group_by(number) %>% 
-  mutate(adposition = str_c(language, "__", adposition)) %>% 
-  pairwise_count(adposition, construction_type) %>% 
-  group_by(item1, item2) %>% 
-  summarise(n = sum(n)) %>% 
-  filter(n > 1) %>% 
-  separate(item1, into = c("language1", "adposition1"), sep = "__") %>% 
-  separate(item2, into = c("language2", "adposition2"), sep = "__") %>% 
-  group_by(language1, language2, adposition1) %>% 
-  summarize(ratio = n/sum(n),
+         !is.na(adposition)) |>  
+  group_by(number) |> 
+  mutate(adposition = str_c(language, "__", adposition)) |> 
+  pairwise_count(adposition, construction_type) |> 
+  group_by(item1, item2) |> 
+  reframe(n = sum(n)) |> 
+  filter(n > 1) |> 
+  separate(item1, into = c("language1", "adposition1"), sep = "__") |> 
+  separate(item2, into = c("language2", "adposition2"), sep = "__") |> 
+  group_by(language1, language2, adposition1) |> 
+  reframe(ratio = n/sum(n),
             n = n,
-            adposition2 = adposition2) %>% 
-  distinct() %>% 
+            adposition2 = adposition2) |> 
+  distinct() |> 
   mutate(language1 = str_replace(language1, "_", " "),
-         language1 = factor(language1, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma")),
+         language1 = factor(language1, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma", "Bamana")),
          language2 = str_replace(language2, "_", " "),
-         language2 = factor(language2, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma"))) %>% 
+         language2 = factor(language2, levels = c("Guro", "Dan Gweetaa", "Mano", "Kpelle", "Kono", "Looma", "Bamana"))) |> 
   ggplot(aes(ratio, adposition1, label = str_c(adposition2, "\n",
                                                round(ratio*100), "% (",
                                                n, ")")))+
@@ -794,27 +786,27 @@ df %>%
 library(tidyverse)
 mano_kpelle_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "mano + kpelle")
 
-mano_kpelle_pre %>% 
+mano_kpelle_pre |> 
   rename(number = Number,
          construction = `Mano construction`,
          construction_type = `Mano extended construction type`,
          adposition = `Mano Postposition`,
          verb = `Mano verb`,
-         verb_meaning = `Mano Complex verb meaning`) %>% 
-  mutate(language = "Mano") %>% 
-  select(number, construction, construction_type, adposition, verb, verb_meaning, language) %>% 
+         verb_meaning = `Mano Complex verb meaning`) |> 
+  mutate(language = "Mano") |> 
+  select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
   filter(!is.na(construction)) ->
   mano
 
-mano_kpelle_pre %>% 
+mano_kpelle_pre |> 
   rename(number = Number,
          construction = `Kpelle construction`,
          construction_type = `Kpelle extended construction type`,
          adposition = `Kpelle postposition`,
          verb = `Kpelle verb`,
-         verb_meaning = `Kpelle complex verb meaning`) %>% 
-  mutate(language = "Kpelle") %>% 
-  select(number, construction, construction_type, adposition, verb, verb_meaning, language) %>% 
+         verb_meaning = `Kpelle complex verb meaning`) |> 
+  mutate(language = "Kpelle") |> 
+  select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
   filter(!is.na(construction)) ->
   kpelle
 
@@ -822,15 +814,15 @@ rm(mano_kpelle_pre)
 
 kono_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "kono")
 
-kono_pre %>% 
+kono_pre |> 
   rename(number = Number,
          construction = `Kono construction...8`,
          construction_type = `Kono extended construction`,
-         adposition = `Kono adposition`) %>% 
+         adposition = `Kono adposition`) |> 
   mutate(language = "Kono",
          verb = "",
-         verb_meaning = "") %>% 
-  select(number, construction, construction_type, adposition, verb, verb_meaning, language) %>% 
+         verb_meaning = "") |> 
+  select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
   filter(!is.na(construction)) ->
   kono
 
@@ -839,15 +831,15 @@ rm(kono_pre)
 # I renamed one of the columns to "Looma extended construction"
 looma_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "Looma")
 
-looma_pre %>% 
+looma_pre |> 
   rename(number = Number,
          construction = `Looma construction`,
          construction_type = `Looma extended construction`,
          adposition = `Looma Postposition`,
          verb = `Looma Verb`,
-         verb_meaning = `Looma Complex Verb`) %>% 
-  mutate(language = "Looma") %>% 
-  select(number, construction, construction_type, adposition, verb, verb_meaning, language) %>% 
+         verb_meaning = `Looma Complex Verb`) |> 
+  mutate(language = "Looma") |> 
+  select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
   filter(!is.na(construction)) ->
   looma
 
@@ -856,15 +848,15 @@ rm(looma_pre)
 # I renamed one of the columns to "Guro extended construction"
 guro_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "Guro")
 
-guro_pre %>% 
+guro_pre |> 
   rename(number = Number,
          construction = `Guro construction`,
          construction_type = `Guro extended construction`,
          adposition = `Guro Postposition`,
          verb = `Guro Verb`,
-         verb_meaning = `Guro Complex Verb`) %>% 
-  mutate(language = "Guro") %>% 
-  select(number, construction, construction_type, adposition, verb, verb_meaning, language) %>% 
+         verb_meaning = `Guro Complex Verb`) |> 
+  mutate(language = "Guro") |> 
+  select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
   filter(!is.na(construction)) ->
   guro
 
@@ -872,95 +864,107 @@ rm(guro_pre)
 
 dan_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "Dan Gweetaa from Vydrin")
 
-dan_pre %>% 
+dan_pre |> 
   rename(number = Number,
          construction = `Dan construction`,
          construction_type = `Dan extended construction type`,
          adposition = `Dan Postposition`,
          verb = `Dan Verb`, 
-         verb_meaning = `Dan complex verb meaning`) %>% 
-  mutate(language = "Dan_Gweetaa") %>% 
-  select(number, construction, construction_type, adposition, verb, verb_meaning, language) %>% 
+         verb_meaning = `Dan complex verb meaning`) |> 
+  mutate(language = "Dan_Gweetaa") |> 
+  select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
   filter(!is.na(construction)) ->
   dan
 
 rm(dan_pre)
 
-guro %>% 
-  bind_rows(kono, kpelle, looma, mano, dan) %>%
+bamana_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "Bambara Vydrin")
+bamana_pre |> 
+  rename(number = Number,
+         construction = `Bamana construction`,
+         construction_type = `Bamana extended construction type`,
+         adposition = `Bamana Postposition`,
+         verb = `Bamana Verb`, 
+         verb_meaning = `Bamana complex verb meaning`) |> 
+  mutate(language = "Bamana") |> 
+  select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
+  filter(!is.na(construction)) ->
+  bamana
+
+guro |> 
+  bind_rows(kono, kpelle, looma, mano, dan, bamana) |>
   write_csv("../GM_merged.csv", na = "")
 
-
-readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") %>% 
-  select(Number, `English predicate`, `Stimulus sentence (SAY)`, `Semantic types`) %>% 
+readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") |> 
+  select(Number, `English predicate`, `Stimulus sentence (SAY)`, `Semantic types`) |> 
   rename(number = Number,
          predicate_eng = `English predicate`,
          stimuli = `Stimulus sentence (SAY)`,
          semantic_type = `Semantic types`) ->
   stimuli
 
-read_csv("../GM_merged.csv") %>% 
+read_csv("../GM_merged.csv") |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>%
-  group_by(number) %>% 
-  add_count(construction_type) %>% 
-  arrange(number, desc(n)) %>% 
-  select(-adposition) %>% 
-  group_by(number, construction_type, language, n) %>% 
-  summarise(construction = str_c(construction, collapse = "; ")) %>% 
-  pivot_wider(names_from = language, values_from = construction, values_fill = "") %>% 
-  group_by(number) %>% 
-  mutate(id = 1:n()) %>%
-  ungroup() %>% 
-  left_join(stimuli) %>% 
-  select(number, semantic_type, predicate_eng, stimuli, id, n, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+         !is.na(construction_type)) |>
+  group_by(number) |> 
+  add_count(construction_type) |> 
+  arrange(number, desc(n)) |> 
+  select(-adposition) |> 
+  group_by(number, construction_type, language, n) |> 
+  reframe(construction = str_c(construction, collapse = "; ")) |> 
+  pivot_wider(names_from = language, values_from = construction, values_fill = "") |> 
+  group_by(number) |> 
+  mutate(id = 1:n()) |>
+  ungroup() |> 
+  left_join(stimuli) |> 
+  select(number, semantic_type, predicate_eng, stimuli, id, n, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana) |> 
   writexl::write_xlsx("../GM_merged_wide.xlsx")
 
-read_csv("../GM_merged.csv") %>% 
+read_csv("../GM_merged.csv") |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>%
-  select(-construction) %>%
-  distinct(number, construction_type, language, adposition) %>% 
-  group_by(number, construction_type, language) %>% 
-  summarise(adposition = str_c(adposition, collapse = "; ")) %>% 
-  pivot_wider(names_from = language, values_from = adposition, values_fill = "") %>% 
-  group_by(number) %>% 
-  mutate(id = 1:n()) %>%
-  ungroup() %>% 
-  left_join(stimuli) %>% 
-  select(number, semantic_type, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle) %>% 
+         !is.na(construction_type)) |>
+  select(-construction) |>
+  distinct(number, construction_type, language, adposition) |> 
+  group_by(number, construction_type, language) |> 
+  reframe(adposition = str_c(adposition, collapse = "; ")) |> 
+  pivot_wider(names_from = language, values_from = adposition, values_fill = "") |> 
+  group_by(number) |> 
+  mutate(id = 1:n()) |>
+  ungroup() |> 
+  left_join(stimuli) |> 
+  select(number, semantic_type, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana) |> 
   writexl::write_xlsx("../GM_merged_wide_adpositions.xlsx")
 
-read_csv("../GM_merged.csv") %>% 
+read_csv("../GM_merged.csv") |> 
   filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) %>%
-  select(-construction) %>%
-  distinct(number, construction_type, language, verb) %>% 
-  group_by(number, construction_type, language) %>% 
-  summarise(verb = str_c(verb, collapse = "; ")) %>% 
-  pivot_wider(names_from = language, values_from = verb, values_fill = "") %>% 
-  group_by(number) %>% 
-  mutate(id = 1:n()) %>%
-  ungroup() %>% 
-  left_join(stimuli) %>% 
-  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle) %>% 
+         !is.na(construction_type)) |>
+  select(-construction) |>
+  distinct(number, construction_type, language, verb) |> 
+  group_by(number, construction_type, language) |> 
+  reframe(verb = str_c(verb, collapse = "; ")) |> 
+  pivot_wider(names_from = language, values_from = verb, values_fill = "") |> 
+  group_by(number) |> 
+  mutate(id = 1:n()) |>
+  ungroup() |> 
+  left_join(stimuli) |> 
+  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle, Bamana) |> 
   writexl::write_xlsx("../GM_merged_wide_verb.xlsx")
 
-read_csv("../GM_merged.csv") %>%
+read_csv("../GM_merged.csv") |>
   filter(!str_detect(construction, "no equivalent"),
          !is.na(construction_type),
-         !is.na(verb_meaning)) %>%
-  select(-construction) %>%
-  distinct(number, construction_type, language, verb, verb_meaning) %>% 
-  mutate(verb_meaning = str_c(verb_meaning, " (", verb, ")")) %>% 
-  group_by(number, construction_type, language) %>%
-  summarise(verb_meaning = str_c(verb_meaning, collapse = "; ")) %>%
-  pivot_wider(names_from = language, values_from = verb_meaning, values_fill = "") %>%
-  group_by(number) %>%
-  mutate(id = 1:n()) %>%
-  ungroup() %>%
-  left_join(stimuli) %>%
-  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle) %>%
+         !is.na(verb_meaning)) |>
+  select(-construction) |>
+  distinct(number, construction_type, language, verb, verb_meaning) |> 
+  mutate(verb_meaning = str_c(verb_meaning, " (", verb, ")")) |> 
+  group_by(number, construction_type, language) |>
+  reframe(verb_meaning = str_c(verb_meaning, collapse = "; ")) |>
+  pivot_wider(names_from = language, values_from = verb_meaning, values_fill = "") |>
+  group_by(number) |>
+  mutate(id = 1:n()) |>
+  ungroup() |>
+  left_join(stimuli) |>
+  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle, Bamana) |>
   writexl::write_xlsx("../GM_merged_wide_verb_meaning.xlsx")
 ```
 
