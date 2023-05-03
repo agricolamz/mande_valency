@@ -479,7 +479,6 @@ df_wide |>
   filter(number %in% to_keep) |> 
   mutate(across(Guro:Bamana, function(x){ifelse(is.na(x), 0, 1)}))  |> 
   select(Guro:Bamana) |> 
-  slice(1:13) |> 
   t() |> 
   dist(method = "binary") ->
   stimuli_sample_all_langs
