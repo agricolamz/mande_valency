@@ -776,6 +776,94 @@ df |>
   labs(y = "")
 ```
 
+## Глагольная этимология
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r etymology-hh}
+et <- readxl::read_xlsx("../GM_merged_wide_verb_VV.xlsx")
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0") |> 
+  distinct() |> 
+  mutate(value = str_replace_all(value, "able, be", "able||| be"),
+         value = str_replace_all(value, "bear, give", "bear||| give"),
+         value = str_replace_all(value, ", shut", "||| shut"),
+         value = str_replace_all(value, "cry, weep", "cry||| weep"),
+         value = str_replace_all(value, "shoot, sting", "shoot||| sting"),
+         value = str_replace_all(value, "stuck, get", "stuck||| get"),
+         value = str_replace_all(value, ",", ";"),
+         value = str_replace_all(value, "\\|\\|\\|", ","),
+         value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1) |>  
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  select(ends_with("etym")) |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") ->
+  etym
+
+etym |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Etimology",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+### neighbornet
+
+```{r etymology-nn}
+etym  |> 
+  neighborNet() |> 
+  plot()
+title(main = "Etimology")
+```
+
+:::
+
+Это сделано по следующей таблице:
+
+```{r}
+et |> 
+  select(number, predicate_eng, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0") |> 
+  distinct() |> 
+  mutate(value = str_replace_all(value, "able, be", "able||| be"),
+         value = str_replace_all(value, "bear, give", "bear||| give"),
+         value = str_replace_all(value, ", shut", "||| shut"),
+         value = str_replace_all(value, "cry, weep", "cry||| weep"),
+         value = str_replace_all(value, "shoot, sting", "shoot||| sting"),
+         value = str_replace_all(value, "stuck, get", "stuck||| get"),
+         value = str_replace_all(value, ",", ";"),
+         value = str_replace_all(value, "\\|\\|\\|", ","),
+         value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = value) |> 
+  pivot_wider(names_from = source, values_from = value2) |>
+  arrange(number, predicate_eng, value) |> 
+  select(-value)
+```
 
 ## Preprocessing
 
