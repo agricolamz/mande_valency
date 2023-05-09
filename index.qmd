@@ -785,7 +785,7 @@ df |>
 ### hclust
 
 ```{r etymology-hh}
-et <- readxl::read_xlsx("../GM_merged_wide_verb_VV.xlsx")
+et <- readxl::read_xlsx("../GM_merged_wide_verb_VV2.xlsx")
 et |> 
   select(number, predicate_eng, stimuli, ends_with("etym")) |> 
   pivot_longer(names_to = "source", 
@@ -811,6 +811,7 @@ et |>
   rename(Guro = Guro_etym,
          Looma = Looma_etym,
          Mano = Mano_etym,
+         Kono = Kono_etym,
          Dan_Gweetaa = Dan_etym,
          Bamana = Bamana_etym,
          Kpelle = Kpelle_etym) |> 
@@ -874,6 +875,7 @@ et |>
   select(ends_with("etym")) |> 
   rename(Guro = Guro_etym,
          Looma = Looma_etym,
+         Kono = Kono_etym,
          Mano = Mano_etym,
          Dan_Gweetaa = Dan_etym,
          Bamana = Bamana_etym,
@@ -971,10 +973,10 @@ kono_pre |>
   rename(number = Number,
          construction = `Kono construction...8`,
          construction_type = `Kono extended construction`,
-         adposition = `Kono adposition`) |> 
-  mutate(language = "Kono",
-         verb = "",
-         verb_meaning = "") |> 
+         adposition = `Kono adposition`,
+         verb = `Kono verb`,
+         verb_meaning = `Kono complex verb`) |> 
+  mutate(language = "Kono") |> 
   select(number, construction, construction_type, adposition, verb, verb_meaning, language) |> 
   filter(!is.na(construction)) ->
   kono
@@ -1070,7 +1072,7 @@ read_csv("../GM_merged.csv") |>
   mutate(id = 1:n()) |>
   ungroup() |> 
   left_join(stimuli) |> 
-  select(number, semantic_type, predicate_eng, stimuli, id, n, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana) |> 
+  select(number, semantic_type, predicate_eng, stimuli, id, n, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana, Kono) |> 
   writexl::write_xlsx("../GM_merged_wide.xlsx")
 
 read_csv("../GM_merged.csv") |> 
@@ -1085,7 +1087,7 @@ read_csv("../GM_merged.csv") |>
   mutate(id = 1:n()) |>
   ungroup() |> 
   left_join(stimuli) |> 
-  select(number, semantic_type, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana) |> 
+  select(number, semantic_type, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana, Kono) |> 
   writexl::write_xlsx("../GM_merged_wide_adpositions.xlsx")
 
 read_csv("../GM_merged.csv") |> 
@@ -1100,7 +1102,7 @@ read_csv("../GM_merged.csv") |>
   mutate(id = 1:n()) |>
   ungroup() |> 
   left_join(stimuli) |> 
-  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle, Bamana) |> 
+  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle, Bamana, Kono) |> 
   writexl::write_xlsx("../GM_merged_wide_verb.xlsx")
 
 read_csv("../GM_merged.csv") |>
@@ -1117,7 +1119,7 @@ read_csv("../GM_merged.csv") |>
   mutate(id = 1:n()) |>
   ungroup() |>
   left_join(stimuli) |>
-  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle, Bamana) |>
+  select(number, predicate_eng, stimuli, id, construction_type, Guro, Looma, Mano, Dan_Gweetaa, Kpelle, Bamana, Kono) |>
   writexl::write_xlsx("../GM_merged_wide_verb_meaning.xlsx")
 ```
 
