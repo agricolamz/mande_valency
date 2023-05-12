@@ -822,7 +822,7 @@ et |>
 etym |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Etimology (all stimuli)",
+  plot(main = "Verb etimology (all stimuli)",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -835,7 +835,7 @@ etym |>
 etym  |> 
   neighborNet() |> 
   plot()
-title(main = "Etimology (all stimuli)")
+title(main = "Verb etimology (all stimuli)")
 ```
 
 :::
@@ -887,7 +887,7 @@ et |>
 etym_random |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Etimology with random equivalents",
+  plot(main = "Verb etimology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -900,7 +900,149 @@ etym_random |>
 etym_random  |> 
   neighborNet() |> 
   plot()
-title(main = "Etimology with random equivalents")
+title(main = "Verb etimology with random equivalents")
+```
+
+:::
+
+Это сделано по следующей таблице:
+
+```{r}
+et |> 
+  select(number, predicate_eng, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0") |> 
+  distinct() |> 
+  mutate(value = str_replace_all(value, "able, be", "able||| be"),
+         value = str_replace_all(value, "bear, give", "bear||| give"),
+         value = str_replace_all(value, ", shut", "||| shut"),
+         value = str_replace_all(value, "cry, weep", "cry||| weep"),
+         value = str_replace_all(value, "shoot, sting", "shoot||| sting"),
+         value = str_replace_all(value, "stuck, get", "stuck||| get"),
+         value = str_replace_all(value, ",", ";"),
+         value = str_replace_all(value, "\\|\\|\\|", ","),
+         value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = value) |> 
+  pivot_wider(names_from = source, values_from = value2) |>
+  arrange(number, predicate_eng, value) |> 
+  select(-value)
+```
+
+
+## Послеложная этимология
+
+Все этимологии:
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r ad-etymology-hh}
+et <- readxl::read_xlsx("../GM_merged_wide_adpositions_VV.xlsx")
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0") |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1) |>  
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") ->
+  etym
+
+etym |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology (all stimuli)",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+### neighbornet
+
+```{r ad-etymology-nn}
+etym  |> 
+  neighborNet() |> 
+  plot()
+title(main = "Adposition etimology (all stimuli)")
+```
+
+:::
+
+Кластеризация со случайным эквивалентом. Я запустил более 10 раз -- ничего в структуре не поменялось, только длина ножек менялась.
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r ad-etymology-random-hh}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0") |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1) |> 
+  group_by(number, source) |> 
+  sample_n(size = 1) |> 
+  ungroup() |> 
+  mutate(value2 = 1) |>  
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  select(ends_with("etym")) |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Kono = Kono_etym,
+         Mano = Mano_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") ->
+  etym_random
+
+etym_random |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology with random equivalents",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+### neighbornet
+
+```{r ad-etymology-random-nn}
+etym_random  |> 
+  neighborNet() |> 
+  plot()
+title(main = "Adposition etimology with random equivalents")
 ```
 
 :::
@@ -937,7 +1079,6 @@ et |>
 
 ```{r}
 #| eval=FALSE
-
 library(tidyverse)
 mano_kpelle_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "mano + kpelle")
 
