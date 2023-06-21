@@ -1075,6 +1075,17 @@ et |>
   select(-value)
 ```
 
+## Сложные глаголы
+
+```{r}
+df |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, language, verb_meaning) |> 
+  pivot_wider(names_from = language, values_from = verb_meaning) |> 
+  View()
+```
+
+
 ## Preprocessing
 
 ```{r}
