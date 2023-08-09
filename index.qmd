@@ -11,6 +11,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+Last update: `today()`
+
 ```{r}
 #| include=FALSE
 # setwd("/home/agricolamz/work/articles/2023_Mande_Say_Khachaturyan_Konoshenko/repo")
@@ -1081,8 +1083,7 @@ et |>
 df |> 
   filter(!is.na(verb_meaning)) |> 
   select(number, language, verb_meaning) |> 
-  pivot_wider(names_from = language, values_from = verb_meaning) |> 
-  View()
+  pivot_wider(names_from = language, values_from = verb_meaning)
 ```
 
 
