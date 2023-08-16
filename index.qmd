@@ -1083,6 +1083,8 @@ et |>
 
 > Если из двух компонентов совпал 1, мы ставим 0.5, если из трех 1, то 0.33, если из трех два, то 0.66. Если две конструкции, то учитываем максимальное совпадение
 
+Я преобразую все вот в такую таблицу. К language я привинчиваю количество частей. Так что, например, первые две строчки нужно читать так: в стимуле номер 1 в языке `Dan_Gweetaa` 2 части `break` и `interior`. Так как таблица отсортирована по номеру стимула, то больше сложных глаголов в первом стимуле нет.
+
 ```{r}
 complex_verbs <- readxl::read_xlsx("../GM_merged_wide_verb_meaning_MK_0807.xlsx")
 
@@ -1101,23 +1103,30 @@ complex_verbs |>
   mutate(n_parts = ifelse(is.na(p3), 2, 3)) |> 
   pivot_longer(names_to = "p", values_to = "form", p1:p3) |> 
   mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
-                          form %in% c("prev", "prev2", "PREF2") ~ NA,
+                          form == "PREF2" ~ "prev2",
                           TRUE ~ form)) |> 
   na.omit() |> 
   arrange(form, number) |> 
   mutate(id = str_c(number, "_", form),
-         language = str_c(language, "_", n_parts)) ->
+         language = str_c(language, "_", n_parts)) |> 
+  select(number, language, form) |> 
+  arrange(number, language, form) ->
   analyze_df
 
+analyze_df
+```
+
+
+```{r}
 map(sort(unique(analyze_df$number)), function(i){
   analyze_df |> 
     filter(number == i) |> 
-    pairwise_count(language, form) |> 
+    pairwise_count(language, form)  |> 
     mutate(total = ifelse(str_detect(item1, "3") | str_detect(item2, "3"), 3, 2),
            value = n/total,
            number = i,
            item1 = str_remove(item1, "_\\d"),
-           item2 = str_remove(item2, "_\\d")) |> 
+           item2 = str_remove(item2, "_\\d"))  |> 
     select(number, item1, item2, value) |> 
     filter(item1 != item2)
 }) |> 
