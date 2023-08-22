@@ -1199,6 +1199,49 @@ title(main = "Complex verbs semantics (all stimuli)")
 
 Конечно, при таком варианте получается много единичных случаев, которые удлинняют палки и в кластеризации и в нейборнете, однако таких случаев, когда во всех семи языках есть форма.
 
+Что если посмотреть только на те стимулы, для которых есть какая-то форма (сложный глагол или нет):
+
+```{r}
+analyze_df  |>
+  filter(number %in% to_keep) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  t() |> 
+  dist(method = "binary") ->
+  complex_verbs_distance_subset
+```
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r complex-verbs-subset}
+complex_verbs_distance_subset |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+### neighbornet
+
+```{r complex-verbs-nn-subset}
+complex_verbs_distance_subset  |> 
+  neighborNet() |> 
+  plot()
+title(main = "Complex verbs semantics with common stimuli")
+```
+
+:::
+
+
 ## Preprocessing
 
 ```{r}
