@@ -1083,7 +1083,6 @@ et |>
 
 > Если из двух компонентов совпал 1, мы ставим 0.5, если из трех 1, то 0.33, если из трех два, то 0.66. Если две конструкции, то учитываем максимальное совпадение
 
-
 ```{r}
 complex_verbs <- readxl::read_xlsx("../GM_merged_wide_verb_meaning.xlsx")
 
@@ -1124,7 +1123,7 @@ map(sort(unique(analyze_df$number)), function(i){
            number = i,
            item1 = str_remove(item1, "_\\d"),
            item2 = str_remove(item2, "_\\d"))  |> 
-    select(number, item1, item2, value) |> 
+    select(number, item1, item2, value, total) |> 
     filter(item1 != item2)
 }) |> 
   list_rbind() ->
@@ -1132,7 +1131,8 @@ map(sort(unique(analyze_df$number)), function(i){
 
 result |> 
   group_by(item1, item2) |> 
-  summarise(value = sum(value)) |> 
+  summarise(value = sum(value),
+            total = sum(total)) |> 
   ggplot(aes(item1, item2))+
   geom_tile(aes(fill = value), colour = "white") +
   geom_text(aes(label = round(value, 3)), colour = "white") +
@@ -1146,9 +1146,58 @@ result |>
 
 Я преобразую все вот в такую таблицу. К language я привинчиваю количество частей. Так что, например, первые две строчки нужно читать так: в стимуле номер 1 в языке `Dan_Gweetaa` 2 части `break` и `interior`. Так как таблица отсортирована по номеру стимула, то больше сложных глаголов в первом стимуле нет.
 
+Я сделал некоторый хак, который позволяет делать кластеризацию. Я завожу признаки, которые состоят из фрагмента значения и номера, в котором он встречается:
+
 ```{r}
-analyze_df
+analyze_df  |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0)
 ```
+
+
+```{r}
+analyze_df  |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  t() |> 
+  dist(method = "binary") ->
+  complex_verbs_distance
+```
+
+::: {.panel-tabset}
+
+### hclust
+
+```{r complex-verbs}
+complex_verbs_distance |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics (all stimuli)",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+### neighbornet
+
+```{r complex-verbs-nn}
+complex_verbs_distance  |> 
+  neighborNet() |> 
+  plot()
+title(main = "Complex verbs semantics (all stimuli)")
+```
+
+:::
+
+Конечно, при таком варианте получается много единичных случаев, которые удлинняют палки и в кластеризации и в нейборнете, однако таких случаев, когда во всех семи языках есть форма.
 
 ## Preprocessing
 
