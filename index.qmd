@@ -1214,7 +1214,7 @@ title(main = "Complex verbs semantics with common stimuli")
 ## Карта
 
 ```{r}
-#| fig-height: 9
+#| fig-height: 10
 
 library(lingtypology)
 readxl::read_xlsx("../for_map.xlsx") |> 
