@@ -47,7 +47,7 @@ df |>
 
 colors <- tibble(language = c("Guro", "Dan Gweetaa", "Dan_Gweetaa", "Mano", 
                     "Kpelle", "Kono", "Looma", "Bamana"),
-       color = c("gold1", "gold3", "gold3","gold3", "cyan3", "cyan3", "cyan1", "tomato"))
+       color = c("gold1", "gold3", "gold3","gold3", "cyan3", "cyan3", "cyan1", "dodgerblue4"))
 ```
 
 ::: {.panel-tabset}
@@ -322,7 +322,15 @@ title(main = "Выборка с первыми строками для кажд�
 
 > МХ: А что будет, если выбрать случайный эквивалент, а не первую строку?
 
-Вот что будет, если взять случайный эквивалент для каждого языка `set.seed(42)` (такие же 3, 5, 7, 12, 13, 15; похож на 4, 8, 11):
+Сегодня (07-10-2023) я вижу следующее:
+
+- Бамана всегда дальше всех
+- Группа [Mano [Kono Kpelle]] всегда вместе
+- Группа [Dan Gweetaa Guro] всегда вместе 
+- Единственная вариация проиходит с Looma он встречается в следующих комбинациях:
+    - [Dan Gweetaa [Guro Looma]]
+    - [[Dan Gweetaa Guro] Looma]
+    - [Looma [Mano [Kono Kpelle]]]
 
 ::: {.panel-tabset}
 
@@ -357,49 +365,6 @@ sample_random_construction |>
 ### neighbornet
 
 ```{r sample-random-construction-nn}
-sample_random_construction |> 
-  neighborNet() |> 
-  plot()
-title(main = "Выборка со случайным эквивалентом для каждого языка")
-```
-
-:::
-
-Вот что будет, если взять случайный эквивалент для каждого языка `set.seed(57)` (такие же 1, 2, 6, 9, 10, 14):
-
-::: {.panel-tabset}
-
-### hclust
-
-```{r sample-random-construction2}
-set.seed(57)
-df |> 
-  filter(!str_detect(construction, "no equivalent"),
-         !is.na(construction_type)) |>
-  group_by(number, language) |> 
-  slice_sample(n = 1) |> 
-  ungroup() |> 
-  select(number, language, construction_type) |> 
-  mutate(construction_type2 = 1) |> 
-  pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) |> 
-  select(Bamana:Mano)  |> 
-  t() |> 
-  dist(method = "binary")  ->
-  sample_random_construction
-
-sample_random_construction |> 
-  hclust() |> 
-  as.phylo() %>%
-  plot(main = "Clusterization with random equivalents",
-       tip.color = colors$color[match(.$tip.label, colors$language)],
-       direction = "downwards",
-       cex = 1.5, 
-       font = 2)
-```
-
-### neighbornet
-
-```{r sample-random-construction-nn2}
 sample_random_construction |> 
   neighborNet() |> 
   plot()
@@ -448,15 +413,20 @@ title(main = "Выборка с популярынми конструкциям�
 
 > МХ: я также думаю что можно попробовать проанализировать только те стимулы где у ВСЕХ языков есть эквиваленты
 
-Вот список стимулов, для которых есть данные всех семи языков:
+Всего стимулов 130, но некоторые из них не попали в датасет: `r (1:130)[!(1:130 %in% unique(df$number))]`
 
 ```{r}
 df |> 
   count(number, language) |> 
-  count(number) |>
+  count(number) |> 
   filter(n == 7) |> 
   pull(number) ->
   to_keep
+```
+
+Вот список стимулов, для которых есть данные всех семи языков (всего таких случаев `r length(to_keep)`):
+
+```{r}
 to_keep
 ```
 
@@ -787,7 +757,7 @@ df |>
 ### hclust
 
 ```{r etymology-hh}
-et <- readxl::read_xlsx("../GM_merged_wide_verb_MK_0908.xlsx")
+et <- readxl::read_xlsx("../GM_merged_wide_verb_MK_0927.xlsx")
 et |> 
   select(number, predicate_eng, stimuli, ends_with("etym")) |> 
   pivot_longer(names_to = "source", 
@@ -930,7 +900,7 @@ et |>
   unnest_longer(value) |> 
   distinct() |> 
   mutate(value2 = value) |> 
-  pivot_wider(names_from = source, values_from = value2) |>
+  pivot_wider(names_from = source, values_from = value2, values_fill = "") |>
   arrange(number, predicate_eng, value) |> 
   select(-value)
 ```
@@ -945,7 +915,7 @@ et |>
 ### hclust
 
 ```{r ad-etymology-hh}
-et <- readxl::read_xlsx("../GM_merged_wide_adpositions_MK_0807.xlsx")
+et <- readxl::read_xlsx("../GM_merged_wide_adpositions_MK_0926.xlsx")
 et |> 
   select(number, predicate_eng, stimuli, ends_with("etym")) |> 
   pivot_longer(names_to = "source", 
@@ -1241,6 +1211,26 @@ title(main = "Complex verbs semantics with common stimuli")
 
 :::
 
+## Карта
+
+```{r}
+#| fig-height: 9
+
+library(lingtypology)
+readxl::read_xlsx("../for_map.xlsx") |> 
+  mutate(language_name = lang.gltc(glottocode)) ->
+  for_map
+
+map.feature(languages = for_map$language_name,
+            features = for_map$color,
+            color = for_map$color, 
+            legend = FALSE,
+            tile = "Esri.WorldGrayCanvas",
+            label = for_map$language,
+            label.position = "bottom", 
+            label.hide = FALSE,
+            minimap = TRUE)
+```
 
 ## Preprocessing
 
