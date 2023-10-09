@@ -1222,6 +1222,13 @@ readxl::read_xlsx("../for_map.xlsx") |>
   for_map
 
 map.feature(languages = for_map$language_name,
+            latitude = for_map$latitude,
+            longitude = for_map$longitude,
+            color = "black", 
+            width = 6) |> 
+  map.feature(languages = for_map$language_name,
+            latitude = for_map$latitude,
+            longitude = for_map$longitude,
             features = for_map$color,
             color = for_map$color, 
             legend = FALSE,
@@ -1229,7 +1236,8 @@ map.feature(languages = for_map$language_name,
             label = for_map$language,
             label.position = "bottom", 
             label.hide = FALSE,
-            minimap = TRUE)
+            minimap = TRUE,
+            pipe.data = _)
 ```
 
 ## Preprocessing
