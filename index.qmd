@@ -45,9 +45,8 @@ df |>
   pull(number) ->
   to_keep
 
-colors <- tibble(language = c("Guro", "Dan Gweetaa", "Dan_Gweetaa", "Mano", 
-                    "Kpelle", "Kono", "Looma", "Bamana"),
-       color = c("gold1", "gold3", "gold3","gold3", "cyan3", "cyan3", "cyan1", "dodgerblue4"))
+colors <- tibble(language = c("Guro", "Dan Gweetaa", "Dan_Gweetaa", "Mano", "Kpelle", "Kono", "Looma", "Bamana"),
+       color = c("gold3", "gold1", "gold1","gold1", "cyan1", "cyan1", "cyan3", "dodgerblue4"))
 ```
 
 ::: {.panel-tabset}
@@ -266,7 +265,7 @@ df_pairwise_total |>
   as.dist() |>   
   hclust() |> 
   as.phylo() %>% 
-  plot(main = "Clusterization with the sample of stimuli",
+  plot(main = "Clusterization with the common of stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5,
@@ -293,8 +292,8 @@ df |>
   pivot_wider(names_from = language, values_from = construction_type2, values_fill = 0) |> 
   select(Bamana:Mano)  |> 
   t() |> 
-  dist(method = "binary") |> 
-  hclust() |> 
+  dist(method = "binary")  |> 
+  hclust(method = "average") |> 
   as.phylo()  %>%
   plot(main = "clusterization with random equivalents and common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
@@ -1289,7 +1288,6 @@ et |>
   pivot_longer(names_to = "source", 
                values_to = "value", 
                ends_with("etym")) |> 
-  na.omit() |>
   filter(value != "0",
          number %in% to_keep) |> 
   distinct() |> 
@@ -1318,7 +1316,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with the sample of stimuli",
+  plot(main = "Verb etimology with common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1991,6 +1989,52 @@ et |>
 
 :::
 
+### Только стимулы, для которых есть заполненная этимология
+
+Если посмотреть только на те случаи, где заполнена этимология, то останется 21 пример.
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  na.omit() |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_replace_all(value, "able, be", "able||| be"),
+         value = str_replace_all(value, "bear, give", "bear||| give"),
+         value = str_replace_all(value, ", shut", "||| shut"),
+         value = str_replace_all(value, "cry, weep", "cry||| weep"),
+         value = str_replace_all(value, "shoot, sting", "shoot||| sting"),
+         value = str_replace_all(value, "stuck, get", "stuck||| get"),
+         value = str_replace_all(value, ",", ";"),
+         value = str_replace_all(value, "\\|\\|\\|", ","),
+         value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1) |>  
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  select(ends_with("etym")) |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Verb etimology with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
 ## Глагольная этимология (old)
 
 Все этимологии:
@@ -2190,7 +2234,602 @@ et |>
 
 ### Только стимулы, для которых есть все языки
 
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
 
+### Только стимулы, для которых есть все языки, случайная этимология для каждого языка
+
+#### v1
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v2
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v3
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v4
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v5
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v6
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v7
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v8
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v9
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v10
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v11
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v12
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v13
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v14
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  pivot_longer(names_to = "source", 
+               values_to = "value", 
+               ends_with("etym")) |> 
+  na.omit() |> 
+  filter(value != "0",
+         number %in% to_keep) |> 
+  distinct() |> 
+  mutate(value = str_split(value, ";")) |> 
+  unnest_longer(value) |> 
+  distinct() |> 
+  mutate(value2 = 1,
+         source = str_replace(source, " ", "_")) |> 
+  pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  ungroup() |> 
+  select(ends_with("etym"))  |> 
+  rename(Guro = Guro_etym,
+         Looma = Looma_etym,
+         Mano = Mano_etym,
+         Kono = Kono_etym,
+         Dan_Gweetaa = Dan_etym,
+         Bamana = Bamana_etym,
+         Kpelle = Kpelle_etym) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Adposition etimology, common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
 
 
 ## Адложная этимология (old)
@@ -2641,6 +3280,7 @@ bamana_pre |>
 
 guro |> 
   bind_rows(kono, kpelle, looma, mano, dan, bamana) |>
+  mutate(construction_type = str_replace_all(construction_type, " N N ", " N ")) |>
   write_csv("../GM_merged.csv", na = "")
 
 readxl::read_xlsx("../say_stimuli.xlsx", sheet = "stimuli_general") |> 
