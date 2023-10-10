@@ -265,7 +265,7 @@ df_pairwise_total |>
   as.dist() |>   
   hclust() |> 
   as.phylo() %>% 
-  plot(main = "Clusterization with the common of stimuli",
+  plot(main = "Clusterization with common of stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5,
