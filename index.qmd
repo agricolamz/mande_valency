@@ -1288,8 +1288,7 @@ et |>
   pivot_longer(names_to = "source", 
                values_to = "value", 
                ends_with("etym")) |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_replace_all(value, "able, be", "able||| be"),
          value = str_replace_all(value, "bear, give", "bear||| give"),
@@ -1301,7 +1300,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1337,8 +1337,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1353,7 +1352,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1384,8 +1384,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1400,7 +1399,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1431,8 +1431,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1447,7 +1446,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1478,8 +1478,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1494,7 +1493,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1525,8 +1525,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1541,7 +1540,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1572,8 +1572,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1588,7 +1587,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1619,8 +1619,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1635,7 +1634,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1666,8 +1666,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1682,7 +1681,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1713,8 +1713,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1729,7 +1728,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1760,8 +1760,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1776,7 +1775,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1807,8 +1807,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1823,7 +1822,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1854,8 +1854,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1870,7 +1869,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1901,8 +1901,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1917,7 +1916,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1948,8 +1948,7 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |>
-  filter(value != "0",
-         number %in% to_keep) |>
+  filter(number %in% to_keep) |>
   group_by(number, predicate_eng, source) |> 
   slice_sample(n = 1)  |> 
   distinct() |> 
@@ -1964,7 +1963,8 @@ et |>
          value = str_replace_all(value, "\\|\\|\\|", ","),
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
-  distinct() |> 
+  distinct() |>
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -1986,7 +1986,6 @@ et |>
        font = 2)
 ```
 
-
 :::
 
 ### Только стимулы, для которых есть заполненная этимология
@@ -2000,8 +1999,7 @@ et |>
   pivot_longer(names_to = "source", 
                values_to = "value", 
                ends_with("etym")) |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_replace_all(value, "able, be", "able||| be"),
          value = str_replace_all(value, "bear, give", "bear||| give"),
@@ -2014,6 +2012,7 @@ et |>
          value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1) |>  
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
   select(ends_with("etym")) |> 
@@ -2241,11 +2240,11 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  filter(value != "0") |> 
   distinct() |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
@@ -2271,6 +2270,8 @@ et |>
 
 ### Только стимулы, для которых есть все языки, случайная этимология для каждого языка
 
+::: {.panel-tabset}
+
 #### v1
 
 ```{r}
@@ -2280,12 +2281,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2320,12 +2322,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2360,12 +2363,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2400,12 +2404,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2440,12 +2445,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2480,12 +2486,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2520,12 +2527,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2560,12 +2568,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2600,12 +2609,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2640,12 +2650,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2680,12 +2691,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2720,12 +2732,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2760,12 +2773,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2800,12 +2814,13 @@ et |>
                values_to = "value", 
                ends_with("etym")) |> 
   na.omit() |> 
-  filter(value != "0",
-         number %in% to_keep) |> 
+  filter(number %in% to_keep) |> 
   distinct() |> 
   mutate(value = str_split(value, ";")) |> 
   unnest_longer(value) |> 
+  mutate(value = str_squish(value)) |> 
   distinct() |> 
+  filter(value != "0") |> 
   mutate(value2 = 1,
          source = str_replace(source, " ", "_")) |> 
   pivot_wider(names_from = source, values_from = value2, values_fill = 0) |> 
@@ -2829,6 +2844,18 @@ et |>
        direction = "downwards",
        cex = 1.5, 
        font = 2)
+```
+
+:::
+
+### Только стимулы, для которых есть заполненная этимология
+
+К сожалению, таких строчек всего одна:
+
+```{r}
+et |> 
+  select(number, predicate_eng, stimuli, ends_with("etym")) |> 
+  na.omit()
 ```
 
 
@@ -3053,6 +3080,7 @@ analyze_df  |>
   pivot_wider(names_from = language, values_from = value, values_fill = 0)
 ```
 
+### Все примеры, без фильтрации
 
 ```{r}
 analyze_df  |> 
@@ -3069,7 +3097,7 @@ analyze_df  |>
 
 ::: {.panel-tabset}
 
-### hclust
+#### hclust
 
 ```{r complex-verbs}
 complex_verbs_distance |> 
@@ -3082,7 +3110,7 @@ complex_verbs_distance |>
        font = 2)
 ```
 
-### neighbornet
+#### neighbornet
 
 ```{r complex-verbs-nn}
 complex_verbs_distance  |> 
@@ -3094,6 +3122,8 @@ title(main = "Complex verbs semantics (all stimuli)")
 :::
 
 Конечно, при таком варианте получается много единичных случаев, которые удлинняют палки и в кластеризации и в нейборнете, однако таких случаев, когда во всех семи языках есть форма.
+
+### Только стимулы, для которых есть все языки
 
 Что если посмотреть только на те стимулы, для которых есть какая-то форма (сложный глагол или нет):
 
@@ -3113,7 +3143,7 @@ analyze_df  |>
 
 ::: {.panel-tabset}
 
-### hclust
+#### hclust
 
 ```{r complex-verbs-subset}
 complex_verbs_distance_subset |> 
@@ -3126,7 +3156,7 @@ complex_verbs_distance_subset |>
        font = 2)
 ```
 
-### neighbornet
+#### neighbornet
 
 ```{r complex-verbs-nn-subset}
 complex_verbs_distance_subset  |> 
