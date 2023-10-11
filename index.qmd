@@ -3012,7 +3012,7 @@ complex_verbs <- readxl::read_xlsx("../GM_merged_wide_verb_meaning.xlsx")
 complex_verbs |> 
   pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
   filter(!is.na(verb_meaning)) |> 
-  select(number, language, verb_meaning) |> 
+  select(number, id, language, verb_meaning) |> 
   mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
          verb_meaning = str_squish(verb_meaning),
          verb_meaning = str_split(verb_meaning, " ; ")) |>
@@ -3028,9 +3028,9 @@ complex_verbs |>
   mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
                           TRUE ~ form)) |> 
   na.omit() |> 
-  arrange(form, number) |> 
-  mutate(id = str_c(number, "_", form),
-         language = str_c(language, "_", n_parts)) |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts),
+         number = str_c(number, "_", id)) |> 
   select(number, language, form) |> 
   arrange(number, language, form) ->
   analyze_df
@@ -3129,7 +3129,9 @@ title(main = "Complex verbs semantics (all stimuli)")
 
 ```{r}
 analyze_df  |>
-  filter(number %in% to_keep) |> 
+  mutate(old_number = str_extract(number, "\\d{1,3}_"),
+         old_number = str_remove(old_number, "_")) |> 
+  filter(old_number %in% to_keep) |> 
   mutate(form = str_c(form, "_", number),
          language = str_remove(language, "_\\d")) |> 
   distinct(language, form) |> 
@@ -3166,6 +3168,672 @@ title(main = "Complex verbs semantics with common stimuli")
 ```
 
 :::
+
+### Только стимулы, для которых есть все языки, случайная этимология для каждого языка
+
+::: {.panel-tabset}
+
+#### v1
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v2
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v3
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v4
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v5
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v6
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v7
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v8
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v9
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v10
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v11
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+
+#### v12
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v13
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+#### v14
+
+```{r}
+complex_verbs |> 
+  filter(number %in% to_keep) |> 
+  group_by(number) |> 
+  slice_sample(n = 1) |> 
+  pivot_longer(names_to = "language", values_to = "verb_meaning", Guro:Kono) |> 
+  filter(!is.na(verb_meaning)) |> 
+  select(number, id, language, verb_meaning) |> 
+  mutate(verb_meaning = str_remove_all(verb_meaning, "\\(.*?\\)"),
+         verb_meaning = str_squish(verb_meaning),
+         verb_meaning = str_split(verb_meaning, " ; ")) |>
+  unnest_longer(verb_meaning) |> 
+  separate_wider_delim(verb_meaning, delim = " ",
+                       names = c("p1", "p2", "p3", "p4"),
+                       too_few = "align_start") |> 
+  filter(!is.na(p2)) |> 
+  mutate(n_parts = case_when(!is.na(p4) ~ 4,
+                             is.na(p4) & !is.na(p3) ~ 3,
+                             is.na(p3) & !is.na(p2) ~ 2)) |> 
+  pivot_longer(names_to = "p", values_to = "form", p1:p4) |> 
+  mutate(form = case_when(str_detect(form, "\\?{1,3}") ~ NA,
+                          TRUE ~ form)) |> 
+  na.omit() |> 
+  arrange(form, number, id) |> 
+  mutate(language = str_c(language, "_", n_parts)) |> 
+  select(number, id, language, form) |> 
+  arrange(number, id, language, form) |> 
+  mutate(form = str_c(form, "_", number),
+         language = str_remove(language, "_\\d")) |> 
+  distinct(language, form) |> 
+  mutate(value = 1) |> 
+  pivot_wider(names_from = language, values_from = value, values_fill = 0) |> 
+  column_to_rownames("form") |>
+  select(-number) |> 
+  t() |> 
+  dist(method = "binary") |> 
+  hclust() |> 
+  as.phylo()  %>%
+  plot(main = "Complex verbs semantics with common stimuli",
+       tip.color = colors$color[match(.$tip.label, colors$language)],
+       direction = "downwards",
+       cex = 1.5, 
+       font = 2)
+```
+
+:::
+
 
 ## Карта
 
