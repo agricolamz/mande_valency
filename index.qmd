@@ -265,7 +265,7 @@ df_pairwise_total |>
   as.dist() |>   
   hclust() |> 
   as.phylo() %>% 
-  plot(main = "Clusterization with common of stimuli",
+  plot(main = "Clusterization with common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5,
@@ -1273,7 +1273,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology (all stimuli)",
+  plot(main = "Verb etymology (all stimuli)",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1316,7 +1316,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with common stimuli",
+  plot(main = "Verb etymology with common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1368,7 +1368,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1415,7 +1415,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1462,7 +1462,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1509,7 +1509,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1556,7 +1556,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1603,7 +1603,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1650,7 +1650,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1697,7 +1697,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1744,7 +1744,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1791,7 +1791,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1838,7 +1838,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1885,7 +1885,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1932,7 +1932,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -1979,7 +1979,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2027,7 +2027,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with common stimuli",
+  plot(main = "Verb etymology with common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2080,7 +2080,7 @@ et |>
 etym |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology (all stimuli)",
+  plot(main = "Verb etymology (all stimuli)",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2093,7 +2093,7 @@ etym |>
 etym  |> 
   neighborNet() |> 
   plot()
-title(main = "Verb etimology (all stimuli)")
+title(main = "Verb etymology (all stimuli)")
 ```
 
 :::
@@ -2145,7 +2145,7 @@ et |>
 etym_random |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Verb etimology with random equivalents",
+  plot(main = "Verb etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2158,7 +2158,7 @@ etym_random |>
 etym_random  |> 
   neighborNet() |> 
   plot()
-title(main = "Verb etimology with random equivalents")
+title(main = "Verb etymology with random equivalents")
 ```
 
 :::
@@ -2224,7 +2224,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology (all stimuli)",
+  plot(main = "Adposition etymology (all stimuli)",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2261,7 +2261,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2306,7 +2306,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2347,7 +2347,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2388,7 +2388,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2429,7 +2429,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2470,7 +2470,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2511,7 +2511,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2552,7 +2552,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2593,7 +2593,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2634,7 +2634,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2675,7 +2675,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2716,7 +2716,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2757,7 +2757,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2798,7 +2798,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2839,7 +2839,7 @@ et |>
   dist(method = "binary") |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology, common stimuli",
+  plot(main = "Adposition etymology, common stimuli",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2898,7 +2898,7 @@ et |>
 etym |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology (all stimuli)",
+  plot(main = "Adposition etymology (all stimuli)",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2911,7 +2911,7 @@ etym |>
 etym  |> 
   neighborNet() |> 
   plot()
-title(main = "Adposition etimology (all stimuli)")
+title(main = "Adposition etymology (all stimuli)")
 ```
 
 :::
@@ -2956,7 +2956,7 @@ et |>
 etym_random |> 
   hclust() |> 
   as.phylo()  %>%
-  plot(main = "Adposition etimology with random equivalents",
+  plot(main = "Adposition etymology with random equivalents",
        tip.color = colors$color[match(.$tip.label, colors$language)],
        direction = "downwards",
        cex = 1.5, 
@@ -2969,7 +2969,7 @@ etym_random |>
 etym_random  |> 
   neighborNet() |> 
   plot()
-title(main = "Adposition etimology with random equivalents")
+title(main = "Adposition etymology with random equivalents")
 ```
 
 :::
