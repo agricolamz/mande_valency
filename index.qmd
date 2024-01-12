@@ -3868,6 +3868,7 @@ map.feature(languages = for_map$language_name,
 
 ```{r}
 #| eval=FALSE
+
 library(tidyverse)
 mano_kpelle_pre <- readxl::read_xlsx("../say_stimuli.xlsx", sheet = "mano + kpelle")
 
