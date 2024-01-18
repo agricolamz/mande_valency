@@ -3864,6 +3864,29 @@ map.feature(languages = for_map$language_name,
             pipe.data = _)
 ```
 
+## Рецензии
+
+> МК: я предлагаю сделать для статьи простую таблицу, где будут сводные данные по всем языкам и только самые распространенные типы, а в приложении более полную таблицу с конкретными языками.
+
+```{r}
+df |> 
+  mutate(language = ifelse(language == "Dan_Gweetaa", "Dan Gweetaa", language)) |> 
+  count(language, construction_type) |> 
+  group_by(language) |> 
+  arrange(desc(n)) |> 
+  slice_head(n = 10) |>
+  mutate(construction_type = tidytext::reorder_within(construction_type, n, language)) |> 
+  ggplot(aes(n, construction_type))+
+  geom_col()+
+  facet_wrap(~language, scales = "free")+
+  tidytext::scale_y_reordered()+
+  labs(x = "", y = "")+
+  theme_minimal()
+```
+
+Caption: Top 10 constructions by the frequency.
+
+
 ## Preprocessing
 
 ```{r}
