@@ -3866,11 +3866,14 @@ map.feature(languages = for_map$language_name,
 
 ## Рецензии
 
+### Construction frequency
+
 > МК: я предлагаю сделать для статьи простую таблицу, где будут сводные данные по всем языкам и только самые распространенные типы, а в приложении более полную таблицу с конкретными языками.
 
 ```{r}
 df |> 
   mutate(language = ifelse(language == "Dan_Gweetaa", "Dan Gweetaa", language)) |> 
+  filter(number %in% to_keep) |> 
   count(language, construction_type) |> 
   group_by(language) |> 
   arrange(desc(n)) |> 
@@ -3885,6 +3888,56 @@ df |>
 ```
 
 Caption: Top 10 constructions by the frequency.
+
+### Missed adpositions
+
+Список контекстов где есть послелог, но нет этимологии 
+
+```{r}
+df |> 
+  filter(is.na(adposition),
+         str_detect(construction_type, "Ad")) |> 
+  arrange(language, number) |> 
+  knitr::kable()
+```
+
+### New construction type
+
+>  Давай будем делать так. Давай сделаем новую табличку с construction types. X Aux Y V, Y Aux X V, X Aux Y N V, Y Aux X N V запишем просто как transitive; X Aux V loc запишем как NOM_loc; во всех примерах с X Aux V Y Ad, Y Aux V X Ad, X Aux N V Y Ad, Y Aux N V X Ad, X Aux Xrefl N V Y Ad, Y Aux Yrefl N V X Ad заменим Ad на этимологическую форму (это реально сделать? достаточно просто составить список на базе таблицы с этимологией послелогов и надеяться, что там нет двух одинаковых форм в разных языках с разной этимологией). X Aux V Y Ad, X Aux N V Y Ad и X Aux Xrefl N V Y Ad станут NOM_этимологическая форма послелога, Y Aux V X Ad, Y Aux N V X Ad и Y Aux Yrefl N V X Adстанут этимологическая форма послелога_NOM. остальные выкинем. Cколько, кстати, выкинется? И посмотрим, какая кластеризация выйдет (применим те же методы: все стимулы, общие, общие и рандомные). Если она будет иметь еще меньше смысла для language specialists, тогда наша более подробная классификация  будет оправдана.
+
+```{r}
+et <- readxl::read_xlsx("../GM_merged_wide_adpositions_MK_0926.xlsx")
+et |> 
+  mutate(Guro = str_c(Guro, " ||| ", `Guro etym`),
+         Looma = str_c(Looma, " ||| ", `Looma etym`),
+         Mano = str_c(Mano, " ||| ", `Mano etym`),
+         Dan_Gweetaa = str_c(Dan_Gweetaa, " ||| ", `Dan etym`),
+         Kono = str_c(Kono, " ||| ", `Kono etym`),
+         Kpelle = str_c(Kpelle, " ||| ", `Kpelle etym`),
+         Bamana = str_c(Bamana, " ||| ", `Bamana etym`)) |> 
+  select(number, predicate_eng, construction_type,
+         Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana) |> 
+  pivot_longer(names_to = "language", values_to = "value", Guro:Bamana) |> 
+  separate_wider_delim(value, names = c("adposition", "adposition_etymology"), delim = " ||| ") |> 
+  filter(adposition_etymology != "0") |> 
+  na.omit() ->
+  adposition_etymology
+
+df |> 
+  filter(number %in% to_keep) |> 
+  left_join(adposition_etymology) |> 
+  mutate(construction_type_new = str_replace(construction_type, "Ad", adposition_etymology)) |> 
+  mutate(construction_type_new = case_when(construction_type_new %in% c("X Aux Y V" ,
+                                                                        "Y Aux X V", 
+                                                                        "X Aux Y N V",
+                                                                        "Y Aux X N V") ~ "transitive",
+                                           construction_type_new == "X Aux V loc" ~ "NOM_loc",
+                                           !is.na(adposition_etymology) & str_detect(construction_type, "^X ") ~ str_c("NOM_", adposition_etymology),
+                                           !is.na(adposition_etymology) & str_detect(construction_type, "^Y ") ~ str_c(adposition_etymology, "_NOM"),
+                                           TRUE ~ construction_type_new)) |> 
+  filter(is.na(construction_type_new)) 
+```
+
 
 
 ## Preprocessing
