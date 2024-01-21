@@ -3897,8 +3897,7 @@ Caption: Top 10 constructions by the frequency.
 df |> 
   filter(is.na(adposition),
          str_detect(construction_type, "Ad")) |> 
-  arrange(language, number) |> 
-  knitr::kable()
+  arrange(language, number) 
 ```
 
 ### New construction type
@@ -3935,7 +3934,8 @@ df |>
                                            !is.na(adposition_etymology) & str_detect(construction_type, "^X ") ~ str_c("NOM_", adposition_etymology),
                                            !is.na(adposition_etymology) & str_detect(construction_type, "^Y ") ~ str_c(adposition_etymology, "_NOM"),
                                            TRUE ~ construction_type_new)) |> 
-  filter(is.na(construction_type_new)) 
+  select(number, language, construction, construction_type, construction_type_new) |> 
+  arrange(construction_type_new, number, language)
 ```
 
 
