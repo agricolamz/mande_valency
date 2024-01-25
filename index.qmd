@@ -3918,7 +3918,9 @@ et |>
          Guro, Looma, Mano, Dan_Gweetaa, Kono, Kpelle, Bamana) |> 
   pivot_longer(names_to = "language", values_to = "value", Guro:Bamana) |> 
   separate_wider_delim(value, names = c("adposition", "adposition_etymology"), delim = " ||| ") |> 
-  filter(adposition_etymology != "0") |> 
+  mutate(adposition = str_split(adposition, "; "),
+         adposition_etymology = str_split(adposition_etymology, "; ")) |> 
+  unnest_longer(c(adposition, adposition_etymology)) |> 
   na.omit() ->
   adposition_etymology
 
@@ -3928,14 +3930,17 @@ df |>
   mutate(construction_type_new = str_replace(construction_type, "Ad", adposition_etymology)) |> 
   mutate(construction_type_new = case_when(construction_type_new %in% c("X Aux Y V" ,
                                                                         "Y Aux X V", 
+                                                                        "X Aux N V",
                                                                         "X Aux Y N V",
                                                                         "Y Aux X N V") ~ "transitive",
-                                           construction_type_new == "X Aux V loc" ~ "NOM_loc",
-                                           !is.na(adposition_etymology) & str_detect(construction_type, "^X ") ~ str_c("NOM_", adposition_etymology),
-                                           !is.na(adposition_etymology) & str_detect(construction_type, "^Y ") ~ str_c(adposition_etymology, "_NOM"),
+                                           construction_type_new == "X Aux V loc" ~ "SBJ_loc",
+                                           construction_type_new == "X be Y" ~ "SBJ_no_postposition",
+                                           !is.na(adposition_etymology) & str_detect(construction_type, "^X ") ~ str_c("SBJ_", adposition_etymology),
+                                           !is.na(adposition_etymology) & str_detect(construction_type, "^Y ") ~ str_c(adposition_etymology, "_SBJ"),
                                            TRUE ~ construction_type_new)) |> 
-  select(number, language, construction, construction_type, construction_type_new) |> 
-  arrange(construction_type_new, number, language)
+  select(number, language, adposition, construction_type, construction_type_new) |> 
+  arrange(construction_type_new, number, language)  |> 
+  filter(!str_detect(construction_type_new, "0"))
 ```
 
 
